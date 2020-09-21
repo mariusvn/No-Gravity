@@ -1,26 +1,17 @@
 import Scene from "./Scene";
-import tilesetimg from 'assets/tilesets/prototype.png';
-import Tileset from "root/Tileset";
+import Tilemap from "root/Tilemap";
+import Game from "root/main";
 
 export default class GameScene extends Scene {
 
-  tilemap = [];
 
   /**
    * @param {MapEntry} map
    */
   constructor(map) {
     super();
-    const lines = map.tileMap.split('\n');
-    for (let x = 0; x < lines.length; x++) {
-      const line = lines[x];
-      const cells = line.split(',').map((item) => {
-        return Number(item);
-      });
-      this.tilemap.push(cells);
-    }
-    const tileset = new Tileset(tilesetimg, {x: 32, y: 32});
-    this.sceneContainer.addChild(tileset.getSprite(0));
+    const tilemap = new Tilemap(map, Game.app.screen.height);
+    this.sceneContainer.addChild(tilemap.container);
   }
 }
 

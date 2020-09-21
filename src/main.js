@@ -31,7 +31,7 @@ export default class Game {
 
   update(delta) {
     if (Game.sceneManager.activeScene) {
-      Game.sceneManager.getScene(Game.sceneManager.activeScene);
+      Game.sceneManager.getScene(Game.sceneManager.activeScene).update(delta);
     }
   }
 }
