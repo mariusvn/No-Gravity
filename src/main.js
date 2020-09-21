@@ -13,7 +13,7 @@ export default class Game {
   constructor() {
     Game.app = new PIXI.Application({antialias: true, height: window.innerHeight, width: window.innerWidth});
     document.body.appendChild(Game.app.view);
-    Game.app.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
     const mainContainer = new PIXI.Container();
     Game.sceneManager = new SceneManager(mainContainer);
