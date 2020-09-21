@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: './src/index.js',
@@ -10,12 +11,17 @@ module.exports = {
   },
   devtool: "source-map",
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
     new HtmlWebpackPlugin({
       title: 'Chill Jam Game',
       hash: true,
       filename: 'index.html',
-      path: path.resolve(__dirname, 'dist')
-    })
+      path: path.resolve(__dirname, 'dist'),
+      template: "src/index.html"
+    }),
   ],
   devServer: {
     contentBase: './dist',
@@ -59,6 +65,14 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader"
+        ]
+      }
     ]
   }
 }
