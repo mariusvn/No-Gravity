@@ -1,4 +1,6 @@
 import Scene from "./Scene";
+import tilesetimg from 'assets/tilesets/prototype.png';
+import Tileset from "root/Tileset";
 
 export default class GameScene extends Scene {
 
@@ -17,5 +19,9 @@ export default class GameScene extends Scene {
       });
       this.tilemap.push(cells);
     }
+    const tileset = new Tileset(tilesetimg, {x: 32, y: 32});
+    console.log(tileset);
+    this.sceneContainer.addChild(tileset.getSprite(0));
   }
 }
+
