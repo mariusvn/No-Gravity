@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import SceneManager from "./Scenes/SceneManager";
 import testScene from "./Scenes/testScene/testScene";
+import Loader from "./Loader";
 
 global.PIXI = PIXI;
 
@@ -17,10 +18,13 @@ export default class Game {
     Game.sceneManager = new SceneManager(mainContainer);
     Game.app.stage.addChild(mainContainer);
 
-    Game.app.ticker.add(delta => this.update(delta));
+    Loader(Game.app.loader, () => {
+      Game.app.ticker.add(delta => this.update(delta));
 
-    Game.sceneManager.addScene(new testScene(), 'test');
-    Game.sceneManager.activeScene = 'test';
+      Game.sceneManager.addScene(new testScene(), 'test');
+      Game.sceneManager.activeScene = 'test';
+    });
+
   }
 
   update(delta) {

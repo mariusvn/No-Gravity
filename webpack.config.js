@@ -30,7 +30,11 @@ module.exports = {
     inline: true,
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js'],
+    alias: {
+      assets: path.resolve(__dirname, 'assets'),
+      root: path.resolve(__dirname, 'src')
+    }
   },
   optimization: {
     splitChunks: {
@@ -61,7 +65,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader?name=images/[name].[ext]',
+            loader: 'file-loader?name=images/[contenthash].[ext]',
           },
         ],
       },
@@ -72,6 +76,11 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           "css-loader"
         ]
+      },
+      {
+        test: /\.(csv|txt)$/,
+        exclude: /node_modules$/,
+        use: 'raw-loader'
       }
     ]
   }
