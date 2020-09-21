@@ -8,7 +8,7 @@ export default class testScene extends GameScene {
     const graph = new PIXI.Graphics();
     graph.beginFill(0xFFFFFF);
     graph.drawRect(10, 10, 100, 100);
-    this.sceneContainer.addChild(graph);
+    //this.sceneContainer.addChild(graph);
   }
 
 

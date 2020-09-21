@@ -4,6 +4,7 @@ export default class Tileset {
 
   texture;
   tileSize;
+  tileSprites = [];
 
   /**
    * @param {string} image
@@ -12,40 +13,35 @@ export default class Tileset {
   constructor(image, tileSize) {
     this.texture = Game.app.loader.resources[image].texture;
     this.tileSize = tileSize;
-    console.log(`width: ${this.texture.width}`);
+    this.generateTileSpriteArray();
   }
 
-  getSprite(index) {
+  generateTileSpriteArray() {
     const dimensions = {
       x: this.texture.width / this.tileSize.x,
       y: this.texture.height / this.tileSize.y
     };
 
-    if (index > dimensions.x * dimensions.y) {
-      throw new TypeError(`Cannot find ${index}th element in the tileset, maximum: ${dimensions.x * dimensions.y}`);
-    }
-
-    const location = {x: 0, y: 0};
-
-    for (let i = 0; i < index; i++) {
-      location.x++;
-      if (location.x >= dimensions.x) {
-        location.x = 0;
-        location.y++;
+    for(let y = 0; y < dimensions.y; y++) {
+      for (let x = 0; x < dimensions.x; x++) {
+        console.log(`adding ${x} ${y} as ${this.tileSprites.length}`)
+        const rectangle = new PIXI.Rectangle(
+          this.tileSize.x * x,
+          this.tileSize.y * y,
+          this.tileSize.x,
+          this.tileSize.y
+        );
+        console.log(rectangle);
+        this.texture.frame = rectangle;
+        this.tileSprites.push(new PIXI.Sprite(this.texture.clone()));
       }
     }
+  }
 
-    const rectangle = new PIXI.Rectangle(
-      this.tileSize.x * location.x,
-      this.tileSize.y * location.y,
-      this.tileSize.x,
-      this.tileSize.y
-    );
-
-    this.texture.frame = rectangle;
-
-    const sprite = new PIXI.Sprite(this.texture);
-
-    return sprite;
+  getSprite(index) {
+    if (index > this.tileSprites.length) {
+      throw new TypeError(`Cannot find ${index}th element in the tileset, maximum: ${this.tileSprites.length}`);
+    }
+      return this.tileSprites[index];
   }
 }
