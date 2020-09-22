@@ -11,7 +11,7 @@ export default class Game {
   static sceneManager;
   static gameplayState = {
     isGravityEnabled: true,
-    gravityForce: 1
+    gravityForce: 1.5
   }
 
   constructor() {

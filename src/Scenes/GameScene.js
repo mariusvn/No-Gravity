@@ -23,5 +23,15 @@ export default class GameScene extends Scene {
     super.update(delta);
     this.player.update(delta);
   }
+
+  onSceneStart() {
+    super.onSceneStart();
+    this.player.startKeyboardListening();
+  }
+
+  onSceneEnd() {
+    super.onSceneEnd();
+    this.player.stopKeyboardListening();
+  }
 }
 

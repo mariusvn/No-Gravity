@@ -1,5 +1,6 @@
 import Tileset from "root/Tileset";
 import prototypeTileset from 'assets/tilesets/prototype.png';
+import * as Collision from "root/Collision";
 
 export default class Tilemap {
 
@@ -44,21 +45,19 @@ export default class Tilemap {
   /**
    * TODO OPTIMIZE PLZZZ
    * @param {PIXI.Rectangle} colliderBox
+   * @return {PIXI.Rectangle | undefined}
    */
   isColliding(colliderBox) {
     for (const sprite of this.spriteList) {
       const boundingBox = sprite.getBounds();
-      if (
-        colliderBox.x + colliderBox.width > boundingBox.x &&
-        colliderBox.x < boundingBox.x + boundingBox.width &&
-        colliderBox.y + colliderBox.height > boundingBox.y &&
-        colliderBox.y < boundingBox.y + boundingBox.height
-      ) {
-        return true;
+      if (Collision.hitTestRectangle(colliderBox, boundingBox)) {
+        return boundingBox;
       }
     }
-    return false
+    return undefined;
   }
+
+
 
   generateTilemapContent() {
     for (let y = 0; y < this.height; y++) {
