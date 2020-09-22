@@ -1,11 +1,12 @@
 import Tileset from "root/Tileset";
 import moonTileset from 'assets/tilesets/moon.png';
+import earthTileset from 'assets/tilesets/earth.png';
 import * as Collision from "root/Collision";
 
 export default class Tilemap {
 
   container = new PIXI.Container();
-  tileset = new Tileset(moonTileset, {x: 32, y: 32});
+  tileset = new Tileset(earthTileset, {x: 32, y: 32});
   tilemap = [];
   spriteList = [];
   width = 0;
