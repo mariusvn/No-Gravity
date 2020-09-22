@@ -6,6 +6,7 @@ export default class Tilemap {
   container = new PIXI.Container();
   tileset = new Tileset(prototypeTileset, {x: 32, y: 32});
   tilemap = [];
+  spriteList = [];
   width = 0;
   height = 0;
   tileRenderSize = 0;
@@ -40,6 +41,25 @@ export default class Tilemap {
     console.groupEnd();
   }
 
+  /**
+   * TODO OPTIMIZE PLZZZ
+   * @param {PIXI.Rectangle} colliderBox
+   */
+  isColliding(colliderBox) {
+    for (const sprite of this.spriteList) {
+      const boundingBox = sprite.getBounds();
+      if (
+        colliderBox.x + colliderBox.width > boundingBox.x &&
+        colliderBox.x < boundingBox.x + boundingBox.width &&
+        colliderBox.y + colliderBox.height > boundingBox.y &&
+        colliderBox.y < boundingBox.y + boundingBox.height
+      ) {
+        return true;
+      }
+    }
+    return false
+  }
+
   generateTilemapContent() {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -50,6 +70,7 @@ export default class Tilemap {
           tile.width = this.tileRenderSize;
           tile.height = this.tileRenderSize;
           this.container.addChild(tile);
+          this.spriteList.push(tile);
         }
       }
     }

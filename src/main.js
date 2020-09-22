@@ -9,6 +9,10 @@ export default class Game {
 
   static app;
   static sceneManager;
+  static gameplayState = {
+    isGravityEnabled: true,
+    gravityForce: 1
+  }
 
   constructor() {
     Game.app = new PIXI.Application({antialias: true, height: window.innerHeight, width: window.innerWidth});

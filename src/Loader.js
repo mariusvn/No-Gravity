@@ -1,7 +1,9 @@
 import prototypeTileset from 'assets/tilesets/prototype.png';
+import prototypePlayer from 'assets/player/prototype.png';
 
 const assetsToLoad = [
-  prototypeTileset
+  prototypeTileset,
+  prototypePlayer
 ]
 
 export default function loader(pixiLoader, cb) {
