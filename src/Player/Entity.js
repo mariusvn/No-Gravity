@@ -25,11 +25,17 @@ export default class Entity {
     collider = this.tilemap.isColliding(newPosRect);
     if (collider) {
       if (collider.centerX > newPosRect.centerX) {
+        // Collision Right
         pos.x = collider.x - this.container.width;
       } else {
+        // Collision Left
         pos.x = collider.x + collider.width;
       }
-      vel.x = 0;
+      if (Game.gameplayState.isGravityEnabled) {
+        vel.x = 0;
+      } else {
+        vel.x = -1 * (vel.x / 2);
+      }
     }
 
     old_pos = pos.y;
@@ -38,27 +44,42 @@ export default class Entity {
     collider = this.tilemap.isColliding(newPosRect);
     if (collider) {
       if (collider.centerY > newPosRect.centerY) {
+        // Collision downside
         pos.y = collider.y - this.container.height;
-        if (vel.y > 0)
+        if (Game.gameplayState.isGravityEnabled && vel.y > 0) {
           vel.y = 0;
+        } else {
+          //bounce on ground if no gravity
+          vel.y = -1 * (vel.y / 2);
+        }
         this.onLanded();
+
+        // Ground friction
+        if (vel.x !== 0 && Game.gameplayState.isGravityEnabled) {
+          if (vel.x > 0.15)
+            vel.x -= 0.1 * delta;
+          else if (vel.x < -0.15)
+            vel.x += 0.1 * delta;
+          else
+            vel.x = 0;
+        }
       } else {
+        // Collision topside
         pos.y = collider.y + collider.height;
-        if (vel.y < 0)
+        if (Game.gameplayState.isGravityEnabled && vel.y < 0)
           vel.y = 0;
-      }
-      if (vel.x !== 0 && Game.gameplayState.isGravityEnabled) {
-        if (vel.x > 0.15)
-          vel.x -= 0.1 * delta;
-        else if (vel.x < -0.15)
-          vel.x += 0.1 * delta;
         else
-          vel.x = 0;
+          vel.y = -1 * (vel.y / 2);
       }
     }
 
     this.setPosition(pos);
     this.setVelocity(vel);
+  }
+
+  jump() {
+    const vel = this.getVelocity();
+    vel.y = -4.5;
   }
 
   setPosition({x, y}) {

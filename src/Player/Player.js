@@ -40,11 +40,12 @@ export default class Player extends Entity {
   }
 
   jump() {
-    if (this.remainingJumps <= 0)
-      return;
-    const vel = this.getVelocity();
-    vel.y = -5;
-    this.remainingJumps--;
+    if (Game.gameplayState.isGravityEnabled) {
+      if (this.remainingJumps <= 0)
+        return;
+      this.remainingJumps--;
+      super.jump();
+    }
   }
 
   startSneack() {
@@ -57,17 +58,19 @@ export default class Player extends Entity {
 
   update(delta) {
     super.update(delta);
-    if (this.keysHandlers.right.isDown) {
-      const vel = this.getVelocity();
-      vel.x += 0.2 * delta;
-    }
-    if (this.keysHandlers.left.isDown) {
-      const vel = this.getVelocity();
-      vel.x -= 0.2 * delta;
-    }
-    if (this.isSneaked) {
-      const vel = this.getVelocity();
-      vel.y += 0.2 * delta;
+    if (Game.gameplayState.isGravityEnabled) {
+      if (this.keysHandlers.right.isDown) {
+        const vel = this.getVelocity();
+        vel.x += 0.2 * delta;
+      }
+      if (this.keysHandlers.left.isDown) {
+        const vel = this.getVelocity();
+        vel.x -= 0.2 * delta;
+      }
+      if (this.isSneaked) {
+        const vel = this.getVelocity();
+        vel.y += 0.2 * delta;
+      }
     }
   }
 
