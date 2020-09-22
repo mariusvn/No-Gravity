@@ -12,6 +12,8 @@ export default class Player extends Entity {
     right: null,
     bottom: null,
   }
+  isSneaked = false;
+  remainingJumps = 2;
 
   constructor(tilemap) {
     super(tilemap);
@@ -26,6 +28,8 @@ export default class Player extends Entity {
     this.keysHandlers.left = keyboard('q');
     this.keysHandlers.right = keyboard('d');
     this.keysHandlers.top.press = this.jump.bind(this);
+    this.keysHandlers.bottom.press = this.startSneack.bind(this);
+    this.keysHandlers.bottom.release = this.stopSneack.bind(this);
   }
 
   stopKeyboardListening() {
@@ -36,10 +40,19 @@ export default class Player extends Entity {
   }
 
   jump() {
-    console.log('cc');
+    if (this.remainingJumps <= 0)
+      return;
     const vel = this.getVelocity();
     vel.y = -5;
-    this.setVelocity(vel);
+    this.remainingJumps--;
+  }
+
+  startSneack() {
+    this.isSneaked = true;
+  }
+
+  stopSneack() {
+    this.isSneaked = false;
   }
 
   update(delta) {
@@ -52,10 +65,15 @@ export default class Player extends Entity {
       const vel = this.getVelocity();
       vel.x -= 0.2 * delta;
     }
-    if (this.keysHandlers.bottom.isDown) {
+    if (this.isSneaked) {
       const vel = this.getVelocity();
       vel.y += 0.2 * delta;
     }
+  }
+
+  onLanded() {
+    super.onLanded();
+    this.remainingJumps = 2;
   }
 
 }

@@ -43,12 +43,15 @@ export default class Tilemap {
   }
 
   /**
-   * TODO OPTIMIZE PLZZZ
    * @param {PIXI.Rectangle} colliderBox
    * @return {PIXI.Rectangle | undefined}
    */
   isColliding(colliderBox) {
     for (const sprite of this.spriteList) {
+      if (sprite.x > colliderBox.x + 100 || sprite.x < colliderBox.x - 100)
+        continue;
+      if (sprite.y > colliderBox.y + 100 || sprite.y < colliderBox.y - 100)
+        continue;
       const boundingBox = sprite.getBounds();
       if (Collision.hitTestRectangle(colliderBox, boundingBox)) {
         return boundingBox;

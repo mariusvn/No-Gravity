@@ -41,6 +41,7 @@ export default class Entity {
         pos.y = collider.y - this.container.height;
         if (vel.y > 0)
           vel.y = 0;
+        this.onLanded();
       } else {
         pos.y = collider.y + collider.height;
         if (vel.y < 0)
@@ -58,40 +59,6 @@ export default class Entity {
 
     this.setPosition(pos);
     this.setVelocity(vel);
-
-
-
-    /*const nextFramContainerBounds = this.container.getBounds();
-    nextFramContainerBounds.y += this._velocity.y * delta;
-    nextFramContainerBounds.x += this._velocity.x * delta;*/
-    /*const localBounding = this.container.getBounds();
-    const collideBounding = this.tilemap.isColliding(localBounding);
-    if (collideBounding) {
-      if (localBounding.centerY > collideBounding.centerY) {
-        this.container.y = collideBounding.y + collideBounding.height;
-        this._velocity.y = 0;
-      } else if (localBounding.centerY < collideBounding.centerY) {
-        this.container.y = collideBounding.y - this.container.height;
-        this._velocity.y = 0;
-      }
-      if (localBounding.centerX > collideBounding.centerX) {
-        this.container.x = collideBounding.x + collideBounding.width;
-        this._velocity.x = 0;
-      } else if (localBounding.centerX < collideBounding.centerX) {
-        this.container.x = collideBounding.x - this.container.width;
-        this._velocity.x = 0;
-      }
-    }
-    this.container.y += this._velocity.y * delta;
-    this.container.x += this._velocity.x * delta;
-*/
-    /*if (!this.tilemap.isColliding(nextFramContainerBounds)) {
-      pos.y += this._velocity.y * delta;
-      pos.x += this._velocity.x * delta;
-    } else {
-      this._velocity.y = 0;
-      this._velocity.x = 0;
-    }*/
   }
 
   setPosition({x, y}) {
@@ -114,5 +81,7 @@ export default class Entity {
   getVelocity() {
     return this._velocity;
   }
+
+  onLanded() {}
 
 }
