@@ -1,4 +1,4 @@
-import testmapCsv from 'assets/maps/test/testmap.csv';
+import testmapCsv from 'assets/maps/test/test-world.csv';
 
 /**
  * @type {Object.<string, MapEntry>}

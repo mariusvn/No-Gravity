@@ -79,7 +79,7 @@ export default class Entity {
 
   jump() {
     const vel = this.getVelocity();
-    vel.y = -4.5;
+    vel.y = -0.195 * this.tilemap.tileRenderSize;
   }
 
   setPosition({x, y}) {
