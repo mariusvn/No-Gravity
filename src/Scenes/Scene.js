@@ -13,4 +13,8 @@ export default class Scene {
     return this.sceneContainer;
   }
 
+  onSceneStart() {}
+
+  onSceneEnd() {}
+
 }

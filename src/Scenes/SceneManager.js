@@ -40,10 +40,12 @@ export default class SceneManager {
   set activeScene(value) {
     if (this._scenes[value]) {
       if (this._activeScene) {
+        this._scenes[this._activeScene].onSceneEnd();
         this._parentContainer.removeChild(this._scenes[this._activeScene].getContainer());
       }
       this._activeScene = value;
       this._parentContainer.addChild(this._scenes[value].getContainer());
+      this._scenes[value].onSceneStart();
     } else throw new TypeError(`Scene ${value} doesnt exists`);
   }
 
