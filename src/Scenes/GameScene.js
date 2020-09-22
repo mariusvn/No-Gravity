@@ -32,7 +32,7 @@ export default class GameScene extends Scene {
     Game.gameplayState.isGravityEnabled = true;
     super.onSceneStart();
     this.player.startKeyboardListening();
-    this.keysHandlers.gravitySwitch = keyboard(' ');
+    this.keysHandlers.gravitySwitch = keyboard('e');
     this.keysHandlers.gravitySwitch.press = this.switchGravity.bind(this);
   }
 

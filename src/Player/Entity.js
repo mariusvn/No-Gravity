@@ -12,7 +12,7 @@ export default class Entity {
 
   update(delta) {
     if (Game.gameplayState.isGravityEnabled) {
-      this._velocity.y += Game.gameplayState.gravityForce * 0.1
+      this._velocity.y += Game.gameplayState.gravityForce * 0.005 * this.tilemap.tileRenderSize;
     }
 
     let pos = this.getPosition();
@@ -79,7 +79,7 @@ export default class Entity {
 
   jump() {
     const vel = this.getVelocity();
-    vel.y = -4.5;
+    vel.y = -0.195 * this.tilemap.tileRenderSize;
   }
 
   setPosition({x, y}) {

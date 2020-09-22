@@ -1,11 +1,12 @@
 import Tileset from "root/Tileset";
-import prototypeTileset from 'assets/tilesets/prototype.png';
+import moonTileset from 'assets/tilesets/moon.png';
+import earthTileset from 'assets/tilesets/earth.png';
 import * as Collision from "root/Collision";
 
 export default class Tilemap {
 
   container = new PIXI.Container();
-  tileset = new Tileset(prototypeTileset, {x: 32, y: 32});
+  tileset = new Tileset(earthTileset, {x: 32, y: 32});
   tilemap = [];
   spriteList = [];
   width = 0;
@@ -48,9 +49,9 @@ export default class Tilemap {
    */
   isColliding(colliderBox) {
     for (const sprite of this.spriteList) {
-      if (sprite.x > colliderBox.x + 100 || sprite.x < colliderBox.x - 100)
+      if (sprite.x > colliderBox.x + 200 || sprite.x < colliderBox.x - 200)
         continue;
-      if (sprite.y > colliderBox.y + 100 || sprite.y < colliderBox.y - 100)
+      if (sprite.y > colliderBox.y + 200 || sprite.y < colliderBox.y - 200)
         continue;
       const boundingBox = sprite.getBounds();
       if (Collision.hitTestRectangle(colliderBox, boundingBox)) {
@@ -66,7 +67,7 @@ export default class Tilemap {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
         if (this.tilemap[y][x] !== -1) {
-          const tile = this.tileset.getSprite(0);
+          const tile = this.tileset.getSprite(this.tilemap[y][x]);
           tile.x = this.tileRenderSize * x;
           tile.y = this.tileRenderSize * y;
           tile.width = this.tileRenderSize;

@@ -5,6 +5,7 @@ import keyboard from "root/Keyboard";
 
 export default class Player extends Entity {
 
+  playerSize = 3;
   playerSprite;
   keysHandlers = {
     top: null,
@@ -18,13 +19,17 @@ export default class Player extends Entity {
   constructor(tilemap) {
     super(tilemap);
     this.playerSprite = new PIXI.Sprite(Game.app.loader.resources[prototypePlayer].texture);
+    const resizeRatio = (tilemap.tileRenderSize * this.playerSize)/(this.playerSprite.height);
+    const newWidth = this.playerSprite.width * resizeRatio;
+    //this.playerSprite.height = tilemap.tileRenderSize * this.playerSize;
+    this.playerSprite.scale.set(resizeRatio);
     this.container.y = 100;
     this.container.addChild(this.playerSprite);
   }
 
   startKeyboardListening() {
-    this.keysHandlers.top = keyboard('z');
-    this.keysHandlers.bottom = keyboard('s');
+    this.keysHandlers.top = keyboard(' ');
+    this.keysHandlers.bottom = keyboard('ctrl');
     this.keysHandlers.left = keyboard('q');
     this.keysHandlers.right = keyboard('d');
     this.keysHandlers.top.press = this.jump.bind(this);
