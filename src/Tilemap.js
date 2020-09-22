@@ -29,7 +29,7 @@ export default class Tilemap {
       this.tilemap.push(cells);
     }
     this.width = this.tilemap[0].length;
-    this.height = this.tilemap.length - 1;
+    this.height = this.tilemap.length;
     this.tileRenderSize = Math.round(heightpx / this.height);
     this.dumpTilemap();
     this.generateTilemapContent();
@@ -53,7 +53,7 @@ export default class Tilemap {
         continue;
       if (sprite.y > colliderBox.y + 200 || sprite.y < colliderBox.y - 200)
         continue;
-      const boundingBox = sprite.getBounds();
+      const boundingBox = new PIXI.Rectangle(sprite.x, sprite.y, sprite.width, sprite.height);
       if (Collision.hitTestRectangle(colliderBox, boundingBox)) {
         return boundingBox;
       }

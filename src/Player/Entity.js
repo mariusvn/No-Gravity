@@ -57,9 +57,9 @@ export default class Entity {
         // Ground friction
         if (vel.x !== 0 && Game.gameplayState.isGravityEnabled) {
           if (vel.x > 0.15)
-            vel.x -= 0.1 * delta;
+            vel.x -= 0.35 * delta;
           else if (vel.x < -0.15)
-            vel.x += 0.1 * delta;
+            vel.x += 0.35 * delta;
           else
             vel.x = 0;
         }
@@ -79,7 +79,7 @@ export default class Entity {
 
   jump() {
     const vel = this.getVelocity();
-    vel.y = -0.195 * this.tilemap.tileRenderSize;
+    vel.y = -0.21 * this.tilemap.tileRenderSize;
   }
 
   setPosition({x, y}) {

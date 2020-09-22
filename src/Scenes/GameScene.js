@@ -3,6 +3,7 @@ import Tilemap from "root/Tilemap";
 import Game from "root/main";
 import Player from "root/Player/Player";
 import keyboard from "root/Keyboard";
+import Camera from "root/Camera";
 
 export default class GameScene extends Scene {
 
@@ -11,6 +12,8 @@ export default class GameScene extends Scene {
   keysHandlers = {
     gravitySwitch: null
   };
+  cameraHandledContainer = new PIXI.Container();
+  camera;
 
   /**
    * @param {MapEntry} map
@@ -19,13 +22,16 @@ export default class GameScene extends Scene {
     super();
     this.tilemap = new Tilemap(map, Game.app.screen.height);
     this.player = new Player(this.tilemap);
-    this.sceneContainer.addChild(this.tilemap.container);
-    this.sceneContainer.addChild(this.player.container);
+    this.cameraHandledContainer.addChild(this.tilemap.container);
+    this.cameraHandledContainer.addChild(this.player.container);
+    this.camera = new Camera(this.player.container, this.cameraHandledContainer);
+    this.sceneContainer.addChild(this.camera.container);
   }
 
   update(delta) {
     super.update(delta);
     this.player.update(delta);
+    this.camera.update();
   }
 
   onSceneStart() {
