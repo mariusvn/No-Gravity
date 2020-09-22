@@ -18,6 +18,7 @@ export default class Game {
     Game.app = new PIXI.Application({antialias: true, autoDensity: true, height: window.innerHeight, width: window.innerWidth, backgroundColor: 0x45473E});
     document.body.appendChild(Game.app.view);
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+    //TODO remove frame dependency
 
     const mainContainer = new PIXI.Container();
     Game.sceneManager = new SceneManager(mainContainer);
