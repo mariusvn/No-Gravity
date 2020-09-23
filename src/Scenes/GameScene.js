@@ -5,8 +5,8 @@ import Player from "root/Player/Player";
 import Mob from "root/Player/Mob";
 import keyboard from "root/Keyboard";
 import Camera from "root/Camera";
-import UserInterface from "root/ui/ui";
 import Trigger from "root/Trigger";
+import UserInterfaceHandler from "root/ui/UserInterfaceHandler";
 
 export default class GameScene extends Scene {
 
@@ -48,7 +48,7 @@ export default class GameScene extends Scene {
     window.endTrigger = this.endTrigger;
     this.mob = new Mob(this.tilemap, 1100, 100);
     this.mob2 = new Mob(this.tilemap, 100, 100);
-    this.userInterface = new UserInterface();
+    this.userInterface = new UserInterfaceHandler();
     this.cameraHandledContainer.addChild(this.tilemap.container);
     this.cameraHandledContainer.addChild(this.player.container);
     this.cameraHandledContainer.addChild(this.mob.container);
@@ -85,7 +85,7 @@ export default class GameScene extends Scene {
   switchGravity() {
     console.log('Gravity switch');
     Game.gameplayState.isGravityEnabled = !Game.gameplayState.isGravityEnabled;
-    this.userInterface.setGravityState(Game.gameplayState.isGravityEnabled);
+    Game.events.triggerEvent('gameplay:gravity-switch', Game.gameplayState.isGravityEnabled);
   }
 
   onPlayerReachEnd() {
