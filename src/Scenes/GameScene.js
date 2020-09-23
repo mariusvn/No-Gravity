@@ -2,6 +2,7 @@ import Scene from "./Scene";
 import Tilemap from "root/Tilemap";
 import Game from "root/main";
 import Player from "root/Player/Player";
+import Mob from "root/Player/Mob";
 import keyboard from "root/Keyboard";
 import Camera from "root/Camera";
 import UserInterface from "root/ui/ui";
@@ -10,6 +11,7 @@ import Trigger from "root/Trigger";
 export default class GameScene extends Scene {
 
   player;
+  mob;
   tilemap;
   keysHandlers = {
     gravitySwitch: null
@@ -44,9 +46,13 @@ export default class GameScene extends Scene {
     }
 
     window.endTrigger = this.endTrigger;
+    this.mob = new Mob(this.tilemap, 1100, 100);
+    this.mob2 = new Mob(this.tilemap, 100, 100);
     this.userInterface = new UserInterface();
     this.cameraHandledContainer.addChild(this.tilemap.container);
     this.cameraHandledContainer.addChild(this.player.container);
+    this.cameraHandledContainer.addChild(this.mob.container);
+    this.cameraHandledContainer.addChild(this.mob2.container);
     this.camera = new Camera(this.player.container, this.cameraHandledContainer);
     this.userInterface.assignToContainer(this.camera.container);
     this.sceneContainer.addChild(this.camera.container);
@@ -55,6 +61,8 @@ export default class GameScene extends Scene {
   update(delta) {
     super.update(delta);
     this.player.update(delta);
+    this.mob.update(delta, this.player);
+    this.mob2.update(delta, this.player);
     this.camera.update();
     this.userInterface.update();
     this.endTrigger.update();
