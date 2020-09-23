@@ -61,7 +61,28 @@ export default class Tilemap {
     return undefined;
   }
 
+  /**
+   * Convert a pixel position to a tile position
+   * @param {number} x
+   * @param {number} y
+   * @return {{x: number, y: number}}
+   */
+  getTileCoord({x, y}) {
+    return {
+      x: Math.floor(x / this.tileRenderSize),
+      y: Math.floor(y / this.tileRenderSize)
+    };
+  }
 
+  /**
+   * Retrieve a tile ID from a tile position
+   * @param {number} x
+   * @param {number} y
+   * @return {number}
+   */
+  getTile({x, y}) {
+    return this.tilemap[y][x];
+  }
 
   generateTilemapContent() {
     for (let y = 0; y < this.height; y++) {
