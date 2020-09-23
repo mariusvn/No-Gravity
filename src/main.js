@@ -2,6 +2,8 @@ import * as PIXI from 'pixi.js';
 import SceneManager from "./Scenes/SceneManager";
 import testScene from "./Scenes/testScene/testScene";
 import Loader from "./Loader";
+import MainMenu from "./Scenes/MainMenu/mainMenu";
+
 
 global.PIXI = PIXI;
 
@@ -27,9 +29,8 @@ export default class Game {
     Loader(Game.app.loader, () => {
       console.info("Assets loaded !");
       Game.app.ticker.add(delta => this.update(delta));
-
-      Game.sceneManager.addScene(new testScene(), 'test');
-      Game.sceneManager.activeScene = 'test';
+      Game.sceneManager.addScene(new MainMenu(), 'MainMenu');
+      Game.sceneManager.activeScene = 'MainMenu';
     });
 
   }
