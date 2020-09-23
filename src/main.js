@@ -32,7 +32,7 @@ export default class Game {
       Game.app.ticker.add(delta => this.update(delta));
       Game.sceneManager.addScene(new testScene(), 'testScene');
       Game.sceneManager.addScene(new MainMenu(), 'MainMenu');
-      Game.sceneManager.activeScene = 'MainMenu';
+      Game.sceneManager.activeScene = 'testScene';
     });
 
   }
