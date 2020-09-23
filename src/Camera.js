@@ -18,12 +18,6 @@ export default class Camera {
     this.sceneContainer = sceneContainer;
     this.followedContainer = followedContainer;
     this.sceneContainer.x = 100;
-    setInterval(() => {
-      console.group('');
-      console.log(this.screenSize)
-      console.log(Math.round((-1 * this.followedContainer.x) + this.screenSize.x / 2));
-      console.groupEnd();
-    }, 500);
   }
 
   getRelativePosition(a, b) {
@@ -38,7 +32,13 @@ export default class Camera {
   }
 
   update() {
-    this.sceneContainer.x = Math.round((-1 * this.followedContainer.x) + this.screenSize.x / 2);
+    const sceneWidth = this.sceneContainer.width;
+    let targetPos = Math.round((-1 * this.followedContainer.x) + this.screenSize.x / 2);
+    if (targetPos > 0)
+      targetPos = (this.followedContainer.x < 0) ? -1 * this.followedContainer.x : 0;
+    if (targetPos < -1 * sceneWidth + this.screenSize.x)
+      targetPos = -1 * sceneWidth + this.screenSize.x;
+    this.sceneContainer.x = targetPos;
   }
 
 }
