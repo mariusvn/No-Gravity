@@ -6,14 +6,15 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: "[name].js",
-    sourceMapFilename: "[name].js.map"
+    filename: "[name]-[id][hash:8].js",
+    sourceMapFilename: "[name]-[contenthash][hash:8][chunkhash].js.map",
+    chunkFilename: "[name]-[contenthash][hash:8][chunkhash].js"
   },
   devtool: "source-map",
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "[name].style.css",
+      chunkFilename: "[id].style.css"
     }),
     new HtmlWebpackPlugin({
       title: 'Chill Jam Game',
@@ -39,13 +40,13 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: 'all',
-      cacheGroups: {
+      /*cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
           chunks: 'initial',
         },
-      },
+      },*/
     },
   },
   module: {

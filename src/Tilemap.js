@@ -48,23 +48,64 @@ export default class Tilemap {
    * @return {PIXI.Rectangle | undefined}
    */
   isColliding(colliderBox) {
-    for (const sprite of this.spriteList) {
-      if (sprite.x > colliderBox.x + 200 || sprite.x < colliderBox.x - 200)
-        continue;
-      if (sprite.y > colliderBox.y + 200 || sprite.y < colliderBox.y - 200)
-        continue;
-      const boundingBox = new PIXI.Rectangle(sprite.x, sprite.y, sprite.width, sprite.height);
-      if (Collision.hitTestRectangle(colliderBox, boundingBox)) {
-        return boundingBox;
+    const colliderTilePos = this.getTileCoord(colliderBox);
+    for (let y = colliderTilePos.y - 4; y < colliderTilePos.y + 5; y++) {
+      for (let x = colliderTilePos.x - 3; x < colliderTilePos.x + 5; x++) {
+        if (x < 0 || y < 0 || x > this.width - 1 || y > this.height - 1)
+          continue;
+        const sprite = this.spriteList[y][x];
+        if (sprite) {
+          if (sprite.x > colliderBox.x + 200 || sprite.x < colliderBox.x - 200)
+            continue;
+          if (sprite.y > colliderBox.y + 200 || sprite.y < colliderBox.y - 200)
+            continue;
+          const boundingBox = new PIXI.Rectangle(sprite.x, sprite.y, sprite.width, sprite.height);
+          if (Collision.hitTestRectangle(colliderBox, boundingBox)) {
+            return boundingBox;
+          }
+        }
       }
     }
-    return undefined;
   }
 
+  /**
+   * Convert a pixel position to a tile position
+   * @param {number} x
+   * @param {number} y
+   * @return {{x: number, y: number}}
+   */
+  getTileCoord({x, y}) {
+    return {
+      x: Math.floor(x / this.tileRenderSize),
+      y: Math.floor(y / this.tileRenderSize)
+    };
+  }
 
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @return {{x: number, y: number}}
+   */
+  getPixelsFromTileCoord({x, y}) {
+    return {
+      x: x * this.tileRenderSize,
+      y: y * this.tileRenderSize
+    }
+  }
+
+  /**
+   * Retrieve a tile ID from a tile position
+   * @param {number} x
+   * @param {number} y
+   * @return {number}
+   */
+  getTile({x, y}) {
+    return this.tilemap[y][x];
+  }
 
   generateTilemapContent() {
     for (let y = 0; y < this.height; y++) {
+      this.spriteList[y] = [];
       for (let x = 0; x < this.width; x++) {
         if (this.tilemap[y][x] !== -1) {
           const tile = this.tileset.getSprite(this.tilemap[y][x]);
@@ -73,7 +114,9 @@ export default class Tilemap {
           tile.width = this.tileRenderSize;
           tile.height = this.tileRenderSize;
           this.container.addChild(tile);
-          this.spriteList.push(tile);
+          this.spriteList[y].push(tile);
+        } else {
+          this.spriteList[y].push(undefined);
         }
       }
     }

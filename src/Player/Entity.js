@@ -5,6 +5,7 @@ export default class Entity {
   container = new PIXI.Container();
   _velocity = {x: 0, y: 0};
   tilemap;
+  newPosRect = new PIXI.Rectangle(0,0,0,0);
 
   constructor(tilemap) {
     this.tilemap = tilemap;
@@ -17,14 +18,19 @@ export default class Entity {
 
     let pos = this.getPosition();
     let vel = this.getVelocity();
-    let newPosRect, collider, old_pos;
+    let collider, old_pos;
+    const containerWidth = this.container.width;
+    const containerHeight = this.container.height;
 
     old_pos = pos.x;
     pos.x += vel.x * delta;
-    newPosRect = new PIXI.Rectangle(pos.x, pos.y, this.container.width, this.container.height);
-    collider = this.tilemap.isColliding(newPosRect);
+    this.newPosRect.x = pos.x;
+    this.newPosRect.y = pos.y;
+    this.newPosRect.width = containerWidth;
+    this.newPosRect.height = containerHeight;
+    collider = this.tilemap.isColliding(this.newPosRect);
     if (collider) {
-      if (collider.centerX > newPosRect.centerX) {
+      if (collider.centerX > this.newPosRect.centerX) {
         // Collision Right
         pos.x = collider.x - this.container.width;
       } else {
@@ -40,10 +46,13 @@ export default class Entity {
 
     old_pos = pos.y;
     pos.y += vel.y * delta;
-    newPosRect = new PIXI.Rectangle(pos.x, pos.y, this.container.width, this.container.height);
-    collider = this.tilemap.isColliding(newPosRect);
+    this.newPosRect.x = pos.x;
+    this.newPosRect.y = pos.y;
+    this.newPosRect.width = containerWidth;
+    this.newPosRect.height = containerHeight;
+    collider = this.tilemap.isColliding(this.newPosRect);
     if (collider) {
-      if (collider.centerY > newPosRect.centerY) {
+      if (collider.centerY > this.newPosRect.centerY) {
         // Collision downside
         pos.y = collider.y - this.container.height;
         if (Game.gameplayState.isGravityEnabled && vel.y > 0) {

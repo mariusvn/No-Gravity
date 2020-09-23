@@ -16,13 +16,16 @@ export default class Player extends Entity {
   isSneaked = false;
   remainingJumps = 2;
   maxSpeed = 8;
+  resizeRatio = 0;
 
   constructor(tilemap) {
     super(tilemap);
     this.playerSprite = new PIXI.Sprite(Game.app.loader.resources[player].texture);
-    const resizeRatio = (tilemap.tileRenderSize * this.playerSize)/(this.playerSprite.height);
-    const newWidth = this.playerSprite.width * resizeRatio;
-    this.playerSprite.scale.set(resizeRatio);
+    this.resizeRatio = (tilemap.tileRenderSize * this.playerSize)/(this.playerSprite.height);
+    this.playerSprite.scale.set(this.resizeRatio);
+    this.playerSprite.anchor.set(0.5);
+    this.playerSprite.x = this.playerSprite.width / 2;
+    this.playerSprite.y = this.playerSprite.height / 2;
     this.container.y = 500;
     this.container.x = 65;
     this.container.addChild(this.playerSprite);
@@ -66,11 +69,13 @@ export default class Player extends Entity {
     super.update(delta);
     if (Game.gameplayState.isGravityEnabled) {
       if (this.keysHandlers.right.isDown) {
+        this.playerSprite.scale.x = this.resizeRatio;
         const vel = this.getVelocity();
         if (vel.x < this.maxSpeed)
           vel.x += 0.7 * delta;
       }
       if (this.keysHandlers.left.isDown) {
+        this.playerSprite.scale.x = -1 * this.resizeRatio;
         const vel = this.getVelocity();
         if (vel.x > -1 * this.maxSpeed)
           vel.x -= 0.7 * delta;
