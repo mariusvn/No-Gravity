@@ -2,12 +2,14 @@ import prototypeTileset from 'assets/tilesets/prototype.png';
 import prototypePlayer from 'assets/player/prototype.png';
 import moonTileset from 'assets/tilesets/moon.png';
 import earthTileset from 'assets/tilesets/earth.png';
+import player from 'assets/player/Player1.png';
 
 const assetsToLoad = [
   prototypeTileset,
   prototypePlayer,
   moonTileset,
-  earthTileset
+  earthTileset,
+  player
 ]
 
 export default function loader(pixiLoader, cb) {

@@ -1,11 +1,11 @@
 import Entity from "root/Player/Entity";
-import prototypePlayer from 'assets/player/prototype.png';
+import player from 'assets/player/Player1.png';
 import Game from "root/main";
 import keyboard from "root/Keyboard";
 
 export default class Player extends Entity {
 
-  playerSize = 3;
+  playerSize = 2;
   playerSprite;
   keysHandlers = {
     top: null,
@@ -19,7 +19,7 @@ export default class Player extends Entity {
 
   constructor(tilemap) {
     super(tilemap);
-    this.playerSprite = new PIXI.Sprite(Game.app.loader.resources[prototypePlayer].texture);
+    this.playerSprite = new PIXI.Sprite(Game.app.loader.resources[player].texture);
     const resizeRatio = (tilemap.tileRenderSize * this.playerSize)/(this.playerSprite.height);
     const newWidth = this.playerSprite.width * resizeRatio;
     this.playerSprite.scale.set(resizeRatio);

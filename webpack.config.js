@@ -62,6 +62,11 @@ module.exports = {
         }
       },
       {
+        test: /\.(ttf|woff)$/,
+        exclude: /node_modules/,
+        use: 'file-loader?name=fonts/[contenthash].[ext]'
+      },
+      {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
