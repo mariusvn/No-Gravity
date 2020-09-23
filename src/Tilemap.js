@@ -100,7 +100,7 @@ export default class Tilemap {
    * @return {number}
    */
   getTile({x, y}) {
-    if(x > this.width || x < 0 || y > this.height || y < 0){
+    if(x > this.width - 1 || x < 0 || y > this.height - 1 || y < 0){
       return undefined;
     }
     return this.tilemap[y][x];
