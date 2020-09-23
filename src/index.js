@@ -2,6 +2,13 @@ import Game from './main';
 import './index.css';
 
 (function index() {
-  new Game();
+  WebFont.load({
+    google: {
+      families: ['Londrina Solid']
+    },
+    active: () => {
+      new Game();
+    }
+  })
 })();
 
