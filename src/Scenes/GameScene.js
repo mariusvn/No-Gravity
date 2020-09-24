@@ -46,7 +46,7 @@ export default class GameScene extends Scene {
     }
 
     window.endTrigger = this.endTrigger;
-    this.mob = new Mob(this.tilemap, 1100, 100);
+    this.mob = new Mob(this.tilemap, 1200, 100);
     this.mob2 = new Mob(this.tilemap, 100, 100);
     this.userInterface = new UserInterface();
     this.cameraHandledContainer.addChild(this.tilemap.container);

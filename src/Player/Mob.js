@@ -6,7 +6,7 @@ export default class Mob extends Entity {
 	Sprite;
 	tilemap;
 	reverse = false;
-	speed = 30;
+	speed = 5;
 	constructor(tilemap, x, y) {
 	    super(tilemap);
 	    this.Sprite = new PIXI.Sprite(Game.app.loader.resources[player].texture);
@@ -17,7 +17,7 @@ export default class Mob extends Entity {
   		this.container.x = x;
 	    this.container.addChild(this.Sprite);
 	    this.tilemap = tilemap;
-	    this.setVelocity({x: 8,y: 10});
+	    this.setVelocity({x: 8,y: this.getVelocity().y});
 	}
 
 	isTouching(player) {
@@ -41,18 +41,15 @@ export default class Mob extends Entity {
 		}
 		checkPos.y += this.Sprite.height;
 		let tilecoord = this.tilemap.getTileCoord(checkPos);
-	//	console.log(this.tilemap.getTile(tilecoord));
 		if ((this.tilemap.getTile(tilecoord) == -1) || this.tilemap.getTile({x: tilecoord.x, y: tilecoord.y -1}) != -1 || this.tilemap.getTile({x: tilecoord.x, y: tilecoord.y -2}) != -1) {
 			this.reverse = !this.reverse;
-			//return true;
 		}
 		if (this.reverse) {
-			this.setVelocity({x: -this.speed, y: 10});
+			this.setVelocity({x: -this.speed, y: this.getVelocity().y});
 		}
 		else 
-			this.setVelocity({x: this.speed, y: 10});
-		//this.setVelocity({x: this.speed, y: 0});
-		//return false;
+			this.setVelocity({x: this.speed, y: this.getVelocity().y});
+
 	}
 
 	update(delta, player){
