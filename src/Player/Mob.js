@@ -37,8 +37,7 @@ export default class Mob extends Entity {
     const tilePos = this.tilemap.getTileCoord({x: frontPositionX, y: footPositionY - 1}); /* -1 to avoid between tile confusion */
 
     if (this.tilemap.getTile({x: tilePos.x, y: tilePos.y + 1}) === -1) {
-      // If tile under the player is air
-      this.reverse = !this.reverse;
+      // If tile under the player is air DO NOTHING
     } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y + 1}) === -1) {
       // If tile in front and under the player is air
       this.reverse = !this.reverse;

@@ -4,6 +4,10 @@ import testScene from "./Scenes/testScene/testScene";
 import Loader from "./Loader";
 import MainMenu from "./Scenes/MainMenu/mainMenu";
 import Event from "root/Event";
+import Tileset from "root/Tileset";
+import earthTileset from "assets/tilesets/earth.png";
+import moonTileset from "assets/tilesets/moon.png";
+import Tilemap from "root/Tilemap";
 
 
 global.PIXI = PIXI;
@@ -15,7 +19,8 @@ export default class Game {
   static events = new Event();
   static gameplayState = {
     isGravityEnabled: true,
-    gravityForce: 2
+    gravityForce: 2,
+    paused: false,
   }
 
   constructor() {
@@ -28,12 +33,16 @@ export default class Game {
     Game.sceneManager = new SceneManager(mainContainer);
     Game.app.stage.addChild(mainContainer);
     Loader(Game.app.loader, () => {
+      Tilemap.tilesets = {
+        earth: new Tileset(earthTileset, {x: 32, y: 32}),
+        moon: new Tileset(moonTileset, {x: 32, y: 32})
+      };
       Game.app.ticker.add(delta => this.update(delta));
-      Game.sceneManager.addScene(new testScene(), 'testScene');
-      Game.sceneManager.addScene(new MainMenu(), 'MainMenu');
+      Game.sceneManager.addScene(testScene, 'testScene');
+      Game.sceneManager.addScene(MainMenu, 'MainMenu');
       Game.sceneManager.activeScene = 'testScene';
     });
-
+    window.game = Game;
   }
 
   update(delta) {
