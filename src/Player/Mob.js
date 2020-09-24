@@ -13,7 +13,6 @@ export default class Mob extends Entity {
     super(tilemap);
     this.Sprite = new PIXI.Sprite(Game.app.loader.resources[player].texture);
     const resizeRatio = (tilemap.tileRenderSize * 2) / (this.Sprite.height);
-    const newWidth = this.Sprite.width * resizeRatio;
     this.Sprite.scale.set(resizeRatio);
     this.container.y = y;
     this.container.x = x;
@@ -27,11 +26,8 @@ export default class Mob extends Entity {
     let mobPosition = this.getPosition();
     let playerBox = new PIXI.Rectangle(playerPosition.x, playerPosition.y, player.playerSprite.width, player.playerSprite.height);
     let mobBox = new PIXI.Rectangle(mobPosition.x, mobPosition.y, this.Sprite.width, this.Sprite.height);
-    //console.log(this.getPosition());
-    if (Collision.hitTestRectangle(playerBox, mobBox)) {
-      return true;
-    }
-    return false;
+    return !!Collision.hitTestRectangle(playerBox, mobBox);
+
   }
 
   move() {
@@ -42,10 +38,10 @@ export default class Mob extends Entity {
     }
     checkPos.y += this.Sprite.height;
     let tilecoord = this.tilemap.getTileCoord(checkPos);
-    if ((this.tilemap.getTile(tilecoord) == -1) || this.tilemap.getTile({
+    if ((this.tilemap.getTile(tilecoord) === -1) || this.tilemap.getTile({
       x: tilecoord.x,
       y: tilecoord.y - 1
-    }) != -1 || this.tilemap.getTile({x: tilecoord.x, y: tilecoord.y - 2}) != -1) {
+    }) !== -1 || this.tilemap.getTile({x: tilecoord.x, y: tilecoord.y - 2}) !== -1) {
       this.reverse = !this.reverse;
     }
     if (this.reverse) {
@@ -57,11 +53,9 @@ export default class Mob extends Entity {
 
   update(delta, player) {
     super.update(delta);
-    //	this.setVelocity({x: 8,y: this.getVelocity().y});
     if (this.isTouching(player)) {
       //	console.log("hit");
     }
-
     this.move();
   }
 
