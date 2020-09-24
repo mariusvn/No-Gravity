@@ -26,8 +26,8 @@ export default class Player extends Entity {
     this.playerSprite.anchor.set(0.5);
     this.playerSprite.x = this.playerSprite.width / 2;
     this.playerSprite.y = this.playerSprite.height / 2;
-    this.container.y = 500;
-    this.container.x = 65;
+    this.container.x = 2 * this.tilemap.tileRenderSize;
+    this.container.y = 23 * this.tilemap.tileRenderSize;
     this.container.addChild(this.playerSprite);
   }
 
@@ -71,18 +71,18 @@ export default class Player extends Entity {
       if (this.keysHandlers.right.isDown) {
         this.playerSprite.scale.x = this.resizeRatio;
         const vel = this.getVelocity();
-        if (vel.x < this.maxSpeed)
-          vel.x += 0.7 * delta;
+        if (vel.x < this.maxSpeed * this.tilemap.tileRenderSize * 0.03)
+          vel.x += 0.7 * delta * this.tilemap.tileRenderSize * 0.04;
       }
       if (this.keysHandlers.left.isDown) {
         this.playerSprite.scale.x = -1 * this.resizeRatio;
         const vel = this.getVelocity();
-        if (vel.x > -1 * this.maxSpeed)
-          vel.x -= 0.7 * delta;
+        if (vel.x > -1 * this.maxSpeed * this.tilemap.tileRenderSize * 0.03)
+          vel.x -= 0.7 * delta * this.tilemap.tileRenderSize * 0.04;
       }
       if (this.isSneaked) {
         const vel = this.getVelocity();
-        vel.y += 0.2 * delta;
+        vel.y += 0.2 * delta * this.tilemap.tileRenderSize * 0.04;
       }
     }
   }

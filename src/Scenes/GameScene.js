@@ -46,8 +46,8 @@ export default class GameScene extends Scene {
     }
 
     window.endTrigger = this.endTrigger;
-    this.mob = new Mob(this.tilemap, 1200, 100);
-    this.mob2 = new Mob(this.tilemap, 100, 100);
+    this.mob = new Mob(this.tilemap, 33 * this.tilemap.tileRenderSize, 20 * this.tilemap.tileRenderSize);
+    this.mob2 = new Mob(this.tilemap, 4 * this.tilemap.tileRenderSize, 16 * this.tilemap.tileRenderSize);
     this.userInterface = new UserInterfaceHandler();
     this.cameraHandledContainer.addChild(this.tilemap.container);
     this.cameraHandledContainer.addChild(this.player.container);
@@ -91,7 +91,8 @@ export default class GameScene extends Scene {
   }
 
   onPlayerReachEnd() {
-    console.info('Player reached end'); 
+    console.info('Player reached end');
+    Game.events.triggerEvent('scene:restart');
   }
 }
 
