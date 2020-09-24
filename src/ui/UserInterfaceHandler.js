@@ -1,10 +1,12 @@
 import GravityIndicator from "root/ui/gravityIndicator";
+import DeathScreen from "root/ui/deathScreen";
 
 export default class UserInterfaceHandler {
   container = new PIXI.Container();
   /** @type Array<UserInterface> */
   uis = [
-    new GravityIndicator()
+    new GravityIndicator(),
+    new DeathScreen()
   ]
 
   constructor() {

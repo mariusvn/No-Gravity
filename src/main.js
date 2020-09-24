@@ -27,9 +27,7 @@ export default class Game {
     const mainContainer = new PIXI.Container();
     Game.sceneManager = new SceneManager(mainContainer);
     Game.app.stage.addChild(mainContainer);
-    console.info("Loading assets ...");
     Loader(Game.app.loader, () => {
-      console.info("Assets loaded !");
       Game.app.ticker.add(delta => this.update(delta));
       Game.sceneManager.addScene(new testScene(), 'testScene');
       Game.sceneManager.addScene(new MainMenu(), 'MainMenu');

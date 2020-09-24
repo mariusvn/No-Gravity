@@ -13,7 +13,6 @@ export default class GravityIndicator extends UserInterface {
     fill: '#0f0',
     fontSize: 40
   });
-  isGravityOn = true;
 
   constructor() {
     super();
@@ -45,22 +44,5 @@ export default class GravityIndicator extends UserInterface {
       this.gravityValueText.text = 'OFF';
       this.gravityValueText.style.fill = '#f00';
     }
-  }
-
-  update(delta) {
-    super.update(delta);
-    /*if (this.isGravityOn) {
-      if (!Game.gameplayState.isGravityEnabled) {
-        this.isGravityOn = false;
-        this.gravityValueText.text = 'OFF';
-        this.gravityValueText.style.fill = '#f00';
-      }
-    } else {
-      if (Game.gameplayState.isGravityEnabled) {
-        this.isGravityOn = true;
-        this.gravityValueText.text = 'ON';
-        this.gravityValueText.style.fill = '#0f0';
-      }
-    }*/
   }
 }

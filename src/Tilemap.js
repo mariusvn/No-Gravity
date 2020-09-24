@@ -31,7 +31,7 @@ export default class Tilemap {
     this.width = this.tilemap[0].length;
     this.height = this.tilemap.length;
     this.tileRenderSize = Math.round(heightpx / this.height);
-    this.dumpTilemap();
+    //this.dumpTilemap();
     this.generateTilemapContent();
   }
 
