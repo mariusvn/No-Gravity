@@ -16,10 +16,7 @@ export default class Tilemap {
     earth: new PIXI.Container(),
     moon: new PIXI.Container()
   };
-  tilesets = {
-    earth: new Tileset(earthTileset, {x: 32, y: 32}),
-    moon: new Tileset(moonTileset, {x: 32, y: 32})
-  };
+  static tilesets = {};
   currentTileset = Tilemap.TilesetType.EARTH;
   tilemap = [];
   spriteList = {
@@ -140,7 +137,7 @@ export default class Tilemap {
         this.spriteList[tilesetType][y] = [];
         for (let x = 0; x < this.width; x++) {
           if (this.tilemap[y][x] !== -1) {
-            const tile = this.tilesets[tilesetType].getSprite(this.tilemap[y][x]);
+            const tile = Tilemap.tilesets[tilesetType].getSprite(this.tilemap[y][x]);
             tile.x = this.tileRenderSize * x;
             tile.y = this.tileRenderSize * y;
             tile.width = this.tileRenderSize;

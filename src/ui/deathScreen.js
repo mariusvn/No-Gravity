@@ -56,6 +56,7 @@ export default class DeathScreen extends UserInterface {
     this.text.y = this.background.height / 2 - this.textDims.height / 2;
     this.background.x = this.screenSize.x;
     this.isAnimating = true;
+    Game.gameplayState.paused = true;
   }
 
   update(delta) {
@@ -77,6 +78,8 @@ export default class DeathScreen extends UserInterface {
       }
       if (!(this.text.x < this.screenSize.x) && !(this.background.x + this.background.width > 0)) {
         this.isAnimating = false;
+        Game.gameplayState.paused = false;
+        Game.events.triggerEvent('scene:restart');
       }
     }
   }

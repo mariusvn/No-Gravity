@@ -60,11 +60,13 @@ export default class GameScene extends Scene {
 
   update(delta) {
     super.update(delta);
+    this.userInterface.update(delta);
+    if (Game.gameplayState.paused)
+      return;
     this.player.update(delta);
     this.mob.update(delta, this.player);
     this.mob2.update(delta, this.player);
     this.camera.update();
-    this.userInterface.update(delta);
     this.endTrigger.update();
   }
 
