@@ -8,9 +8,9 @@
 	"laserHitReg":[
 		{
 			"x": 1000,
-			"y": 720,
-			"lenght": 2,
-			"delay": -1,
+			"y": 620,
+			"lenght": 3,
+			"delay": 1000,
 			"direction": "top"
 		},
 		{

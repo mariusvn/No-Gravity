@@ -15,8 +15,26 @@ export default class Laser{
     for(let i = 0; i <= lenght; i ++){
      // console.log(i);
       this.sprite.push(new PIXI.Sprite(Game.app.loader.resources[laserimg].texture));
-      this.sprite[i].y = y - this.sprite[i].height*(i+1);
-      this.sprite[i].x = x;
+      if (direction === "top"){
+        this.sprite[i].y = y - this.sprite[i].height*(i+1);
+        this.sprite[i].x = x
+      }
+      else if(direction === "bottom"){
+        this.sprite[i].y = y + this.sprite[i].height*(i+1);
+        this.sprite[i].x = x
+      }
+      else if(direction === "left") {
+        this.sprite[i].angle = 90;
+        this.sprite[i].y = y
+        this.sprite[i].x = x + this.sprite[i].height*(i+1);
+      }
+      else {
+        this.sprite[i].angle = -90;
+        this.sprite[i].y = y
+        this.sprite[i].x = x - this.sprite[i].height*(i+1);
+      }
+
+     // this.sprite[i].x = x;
       this._laserlenght = this.sprite[i].height;
      // console.log(this.sprite[i].x);
       this.container.addChild(this.sprite[i]);
