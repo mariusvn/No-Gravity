@@ -1,5 +1,6 @@
 import UserInterface from "root/ui/ui";
 import keyboard from "root/Keyboard";
+import Game from "root/main";
 
 export default class DeathScreen extends UserInterface {
 
@@ -41,7 +42,10 @@ export default class DeathScreen extends UserInterface {
     this.container.addChild(this.text);
     // TODO test key to trigger death screen animation
     const a = keyboard('g');
-    a.press = this.startAnim.bind(this);
+    a.press = () => {
+      Game.events.triggerEvent('gameplay:death');
+    }
+    Game.events.addEventHandler('gameplay:death', this.startAnim.bind(this));
   }
 
   startAnim() {
@@ -57,7 +61,6 @@ export default class DeathScreen extends UserInterface {
   update(delta) {
     super.update(delta);
     if (this.isAnimating) {
-      console.log(delta);
       if (this.text.x < this.screenSize.x) {
         if (this.text.x < this.background.x || this.text.x + this.textDims.width > this.background.x + this.background.width) {
           this.text.x += delta * 40;
