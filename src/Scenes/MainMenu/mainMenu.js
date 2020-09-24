@@ -28,6 +28,7 @@ function cc(){
 }
 
 function setScene(){
+  // Game.sceneManager.addScene(new GameScene(), 'GameScene');
    Game.sceneManager.activeScene = 'testScene';
 }
 

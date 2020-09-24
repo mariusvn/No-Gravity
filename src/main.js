@@ -3,7 +3,7 @@ import SceneManager from "./Scenes/SceneManager";
 import testScene from "./Scenes/testScene/testScene";
 import Loader from "./Loader";
 import MainMenu from "./Scenes/MainMenu/mainMenu";
-import GameScene from "./Scenes/GameScene";
+import Event from "root/Event";
 
 
 global.PIXI = PIXI;
@@ -12,6 +12,7 @@ export default class Game {
 
   static app;
   static sceneManager;
+  static events = new Event();
   static gameplayState = {
     isGravityEnabled: true,
     gravityForce: 2
@@ -26,9 +27,7 @@ export default class Game {
     const mainContainer = new PIXI.Container();
     Game.sceneManager = new SceneManager(mainContainer);
     Game.app.stage.addChild(mainContainer);
-    console.info("Loading assets ...");
     Loader(Game.app.loader, () => {
-      console.info("Assets loaded !");
       Game.app.ticker.add(delta => this.update(delta));
       Game.sceneManager.addScene(new testScene(), 'testScene');
       Game.sceneManager.addScene(new MainMenu(), 'MainMenu');
