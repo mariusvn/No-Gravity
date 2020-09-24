@@ -31,7 +31,7 @@ export default class Mob extends Entity {
   }
 
   move() {
-    const userPos = Object.assign({}, this.getPosition());
+    const userPos = this.getPosition();
     const frontPositionX = (this.reverse) ? userPos.x + this.sprite.width : userPos.x;
     const footPositionY = userPos.y + this.sprite.height;
     const tilePos = this.tilemap.getTileCoord({x: frontPositionX, y: footPositionY - 1}); /* -1 to avoid between tile confusion */
