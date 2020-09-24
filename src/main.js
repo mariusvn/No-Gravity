@@ -3,7 +3,7 @@ import SceneManager from "./Scenes/SceneManager";
 import testScene from "./Scenes/testScene/testScene";
 import Loader from "./Loader";
 import MainMenu from "./Scenes/MainMenu/mainMenu";
-import GameScene from "./Scenes/GameScene";
+import Event from "root/Event";
 
 
 global.PIXI = PIXI;
@@ -12,6 +12,7 @@ export default class Game {
 
   static app;
   static sceneManager;
+  static events = new Event();
   static gameplayState = {
     isGravityEnabled: true,
     gravityForce: 2
