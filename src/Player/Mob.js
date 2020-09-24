@@ -38,6 +38,7 @@ export default class Mob extends Entity {
 
     if (this.tilemap.getTile({x: tilePos.x, y: tilePos.y + 1}) === -1) {
       // If tile under the player is air DO NOTHING
+      return;
     } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y + 1}) === -1) {
       // If tile in front and under the player is air
       this.reverse = !this.reverse;
@@ -49,7 +50,7 @@ export default class Mob extends Entity {
       this.reverse = !this.reverse;
     }
 
-    this.setVelocity({x: this.speed * ((this.reverse) ? -1 : 1), y: this.getVelocity().y});
+    this.setVelocity({x: this.speed * ((this.reverse) ? -1 : 1) * this.tilemap.tileRenderSize * 0.03, y: this.getVelocity().y});
   }
 
   update(delta, player) {
