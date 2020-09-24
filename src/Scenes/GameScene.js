@@ -6,6 +6,7 @@ import Mob from "root/Player/Mob";
 import keyboard from "root/Keyboard";
 import Camera from "root/Camera";
 import Trigger from "root/Trigger";
+import Laser from "root/Laser";
 import UserInterfaceHandler from "root/ui/UserInterfaceHandler";
 
 export default class GameScene extends Scene {
@@ -48,7 +49,9 @@ export default class GameScene extends Scene {
     window.endTrigger = this.endTrigger;
     this.mob = new Mob(this.tilemap, 33 * this.tilemap.tileRenderSize, 20 * this.tilemap.tileRenderSize);
     this.mob2 = new Mob(this.tilemap, 4 * this.tilemap.tileRenderSize, 16 * this.tilemap.tileRenderSize);
+    this.laser = new Laser(this.player, this.tilemap, map.dynamicObjectsMap.laserHitReg[0]);
     this.userInterface = new UserInterfaceHandler();
+    this.cameraHandledContainer.addChild(this.laser.container);
     this.cameraHandledContainer.addChild(this.tilemap.container);
     this.cameraHandledContainer.addChild(this.player.container);
     this.cameraHandledContainer.addChild(this.mob.container);
@@ -67,6 +70,8 @@ export default class GameScene extends Scene {
     this.mob.update(delta, this.player);
     this.mob2.update(delta, this.player);
     this.camera.update();
+    this.laser.update(this.player);
+    this.userInterface.update(delta);
     this.endTrigger.update();
   }
 
@@ -82,6 +87,7 @@ export default class GameScene extends Scene {
     super.onSceneEnd();
     this.player.stopKeyboardListening();
     this.keysHandlers.gravitySwitch.unsubscribe();
+    this.laser.onSceneEnd();
   }
 
   switchGravity() {

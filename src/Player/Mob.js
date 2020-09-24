@@ -5,9 +5,9 @@ import * as Collision from "root/Collision";
 
 export default class Mob extends Entity {
   sprite;
-  tilemap;
   reverse = false;
   speed = 5;
+  _canHitPlayer = true;
 
   constructor(tilemap, x, y) {
     super(tilemap);
@@ -17,7 +17,6 @@ export default class Mob extends Entity {
     this.container.y = y;
     this.container.x = x;
     this.container.addChild(this.sprite);
-    this.tilemap = tilemap;
     this.setVelocity({x: 8, y: this.getVelocity().y});
   }
 
@@ -45,7 +44,7 @@ export default class Mob extends Entity {
     } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y}) !== -1) {
       // If tile in front of knees is filled
       this.reverse = !this.reverse;
-    } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y -1}) !== -1) {
+    } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y - 1}) !== -1) {
       // If tile in front of head is filled
       this.reverse = !this.reverse;
     }
@@ -55,8 +54,9 @@ export default class Mob extends Entity {
 
   update(delta, player) {
     super.update(delta);
-    if (this.isTouching(player)) {
-      //	console.log("hit");
+    if (this.isTouching(player) && this._canHitPlayer) {
+      Game.events.triggerEvent('gameplay:death');
+      this._canHitPlayer = false;
     }
     this.move();
   }
