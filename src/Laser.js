@@ -12,7 +12,7 @@ export default class Laser{
   _laserlenght;
   delay;
   constructor(player, tilemap, {x, y, lenght, delay, direction}) {
-    for(let i = 0; i <= lenght-1; i ++){
+    for(let i = 0; i <= lenght; i ++){
      // console.log(i);
       this.sprite.push(new PIXI.Sprite(Game.app.loader.resources[laserimg].texture));
       this.sprite[i].y = y - this.sprite[i].height*(i+1);
@@ -27,7 +27,7 @@ export default class Laser{
         this.sprite[0].x,
         this.sprite[this.sprite.length-1].y,
         this.sprite[0].width,
-        this.sprite[0].y - this.sprite[this.sprite.length-1].height
+        this.sprite[0].height*this.sprite.length
       ),
       player.container
     );
