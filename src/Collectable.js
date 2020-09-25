@@ -7,11 +7,13 @@ export default class Collectable{
   count = {total: 0, pick: 0,}
   sprite
   _pick = false;
-  constructor(player, x,y) {
+  constructor(player, x, y, tileRenderSize) {
     this.sprite =  new PIXI.Sprite(Game.app.loader.resources[tilecoin].texture);
+    this.sprite.width = tileRenderSize;
+    this.sprite.height = tileRenderSize;
 
-    this.container.x = x;
-    this.container.y = y;
+    this.container.x = x * tileRenderSize;
+    this.container.y = y * tileRenderSize;
     this.container.addChild(this.sprite);
     this.takeCoin = new Trigger(
       new PIXI.Rectangle(

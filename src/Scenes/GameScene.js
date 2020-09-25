@@ -23,6 +23,7 @@ export default class GameScene extends Scene {
   endTrigger;
   lasers = [];
   mobs = [];
+  collectables = [];
 
   /**
    * @param {MapEntry} map
@@ -49,9 +50,6 @@ export default class GameScene extends Scene {
     }
 
     window.endTrigger = this.endTrigger;
-    //this.mob = new Mob(this.tilemap, 33 * this.tilemap.tileRenderSize, 20 * this.tilemap.tileRenderSize);
-    //this.mob2 = new Mob(this.tilemap, 4 * this.tilemap.tileRenderSize, 16 * this.tilemap.tileRenderSize);
-    //this.laser = new Laser(this.player, this.tilemap, map.dynamicObjectsMap.laserHitReg[0]);
     for (const laserData of map.dynamicObjectsMap.laserHitReg) {
       const laser = new Laser(this.player, this.tilemap, laserData)
       this.lasers.push(laser);
@@ -61,6 +59,15 @@ export default class GameScene extends Scene {
       const mob = new Mob(this.tilemap, ennemy.x, ennemy.y);
       this.mobs.push(mob);
       this.cameraHandledContainer.addChild(mob.container);
+    }
+    for (const collectableData of map.dynamicObjectsMap.collectables) {
+      const collectable = new Collectable(
+        this.player,
+        collectableData.x,
+        collectableData.y,
+        this.tilemap.tileRenderSize);
+      this.collectables.push(collectable);
+      this.cameraHandledContainer.addChild(collectable.container);
     }
     this.userInterface = new UserInterfaceHandler();
     this.cameraHandledContainer.addChild(this.tilemap.container);
@@ -79,6 +86,7 @@ export default class GameScene extends Scene {
     this.camera.update();
     this.updateLasers();
     this.updateMobs(delta);
+    this.updateCollectable();
     this.userInterface.update(delta);
     this.endTrigger.update();
   }
@@ -92,6 +100,12 @@ export default class GameScene extends Scene {
   updateMobs(delta) {
     for (const mob of this.mobs) {
       mob.update(delta, this.player);
+    }
+  }
+
+  updateCollectable() {
+    for (const collectable of this.collectables) {
+      collectable.update();
     }
   }
 

@@ -16,5 +16,32 @@ export default MapRegistry;
 /**
  * @typedef MapEntry
  * @property {string} tileMap,
- * @property {any} dynamicObjectsMap
+ * @property {{
+ *   endTrigger: {
+ *     x: number,
+ *     y: number,
+ *     width: number,
+ *     height: number
+ *   },
+ *   start: {
+ *     x: number,
+ *     y: number
+ *   },
+ *   laserHitReg: Array<{
+ *     x: number,
+ *     y: number,
+ *     length: number,
+ *     delay: number,
+ *     direction: 'top'|'left'|'right'|'bottom'
+ *   }>,
+ *   ennemies: Array<{
+ *     x: number,
+ *     y: number,
+ *     speed: number
+ *   }>,
+ *   collectables: Array<{
+ *     x: number,
+ *     y: number
+ *   }>
+ * }} dynamicObjectsMap
  */

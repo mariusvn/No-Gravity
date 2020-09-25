@@ -68,9 +68,9 @@ export default class Entity {
         // Ground friction
         if (vel.x !== 0 && Game.gameplayState.isGravityEnabled) {
           if (vel.x > 0.15)
-            vel.x -= 0.5 * delta;
+            vel.x -= 0.6 * delta;
           else if (vel.x < -0.15)
-            vel.x += 0.5 * delta;
+            vel.x += 0.6 * delta;
           else
             vel.x = 0;
         }
