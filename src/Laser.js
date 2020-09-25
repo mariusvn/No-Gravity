@@ -1,9 +1,8 @@
 import Game from "root/main";
 import laserimg from 'assets/player/Player1-old.png';
-import * as Collision from "root/Collision";
 import Trigger from "root/Trigger";
 
-export default class Laser{
+export default class Laser {
   container = new PIXI.Container();
   sprite = [];
   _canHitPlayer = true;
@@ -11,93 +10,87 @@ export default class Laser{
   _intervalId;
   _laserlenght;
   delay;
+
   constructor(player, tilemap, {x, y, lenght, delay, direction}) {
-    for(let i = 0; i <= lenght-1; i ++){
-     // console.log(i);
+    x = x * tilemap.tileRenderSize;
+    y = y * tilemap.tileRenderSize;
+    for (let i = 0; i <= lenght - 1; i++) {
       this.sprite.push(new PIXI.Sprite(Game.app.loader.resources[laserimg].texture));
-      if (direction === "top"){
-        this.sprite[i].y = y - this.sprite[i].height*(i+1);
+      if (direction === "top") {
+        this.sprite[i].y = y - this.sprite[i].height * (i + 1);
         this.sprite[i].x = x
-      }
-      else if(direction === "bottom"){
-        this.sprite[i].y = y + this.sprite[i].height*(i+1);
+      } else if (direction === "bottom") {
+        this.sprite[i].y = y + this.sprite[i].height * (i + 1);
         this.sprite[i].x = x
-      }
-      else if(direction === "left") {
+      } else if (direction === "left") {
         this.sprite[i].angle = -90;
         this.sprite[i].y = y
-        this.sprite[i].x = x - this.sprite[i].height*(i+1);
-      }
-      else {
+        this.sprite[i].x = x - this.sprite[i].height * (i + 1);
+      } else {
         this.sprite[i].angle = 90;
         this.sprite[i].y = y
-        this.sprite[i].x = x + this.sprite[i].height*(i+1);
+        this.sprite[i].x = x + this.sprite[i].height * (i + 1);
       }
 
-     // this.sprite[i].x = x;
       this._laserlenght = this.sprite[i].height;
-     // console.log(this.sprite[i].x);
       this.container.addChild(this.sprite[i]);
     }
-   // this._laserlenght = this.sprite.length * this.sprite[0].height;
-    if (direction === "top" || direction === "bottom"){
+
+    if (direction === "top" || direction === "bottom") {
       this.laserHitReg = new Trigger(
         new PIXI.Rectangle(
           this.sprite[0].x,
-          this.sprite[(direction === "bottom") ? 0: this.sprite.length-1].y,
+          this.sprite[(direction === "bottom") ? 0 : this.sprite.length - 1].y,
           this.sprite[0].width,
-          this.sprite[0].height*this.sprite.length
+          this.sprite[0].height * this.sprite.length
         ),
         player.container
       );
-    }else{
+    } else {
       this.laserHitReg = new Trigger(
         new PIXI.Rectangle(
-          this.sprite[(direction === "right") ? 0: this.sprite.length-1].x -((direction === "right") ? this.sprite[0].height: 0),
-          this.sprite[0].y + ((direction === "right")? 0: -1) *this.sprite[0].width,
-          this.sprite[0].height*this.sprite.length,
+          this.sprite[(direction === "right") ? 0 : this.sprite.length - 1].x - ((direction === "right") ? this.sprite[0].height : 0),
+          this.sprite[0].y + ((direction === "right") ? 0 : -1) * this.sprite[0].width,
+          this.sprite[0].height * this.sprite.length,
           this.sprite[0].width
         ),
         player.container
       );
     }
-    console.log(this.sprite[0].y)
+
     this.delay = delay;
     this._intervalId = this.startInterval();
     this.laserHitReg.onCollide = this.onHit.bind(this);
   }
 
   onHit() {
-    if (this._canHitPlayer){
+    if (this._canHitPlayer) {
       this._canHitPlayer = false;
-      console.log("hit");
       Game.events.triggerEvent('gameplay:death');
     }
   }
 
-  startInterval(){
+  startInterval() {
 
-    return setInterval(() =>{
-      if(this.delay !== -1)
-         this._active = !this._active;
+    return setInterval(() => {
+      if (this.delay !== -1)
+        this._active = !this._active;
 
       let alpha = (this._active ? 1 : 0);
-      for(let i = 0; i < this.sprite.length; i ++){
+      for (let i = 0; i < this.sprite.length; i++) {
         this.sprite[i].alpha = alpha;
       }
 
-    },this.delay)
+    }, this.delay)
   }
 
-  onSceneEnd(){
+  onSceneEnd() {
     clearInterval(this._intervalId);
   }
 
   update(player) {
-    //this.i++;
     if (this._active)
-       this.laserHitReg.update()
-   // console.log(player.getPosition())
+      this.laserHitReg.update()
   }
 
 }
