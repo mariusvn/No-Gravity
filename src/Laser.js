@@ -15,6 +15,8 @@ export default class Laser {
     x = x * tilemap.tileRenderSize;
     y = y * tilemap.tileRenderSize;
     for (let i = 0; i <= lenght - 1; i++) {
+
+
       this.sprite.push(new PIXI.Sprite(Game.app.loader.resources[laserimg].texture));
       if (direction === "top") {
         this.sprite[i].y = y - this.sprite[i].height * (i + 1);

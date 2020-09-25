@@ -5,6 +5,7 @@ import earthTileset from 'assets/tilesets/earth.png';
 import tilesetimg from 'assets/tilesets/interface32x.png';
 import player from 'assets/player/Player1.png';
 import playerOldFrame from 'assets/player/Player1-old.png';
+import tilecoin from 'assets/tilesets/goldCoin1.png';
 
 const assetsToLoad = [
   prototypeTileset,
@@ -13,6 +14,7 @@ const assetsToLoad = [
   tilesetimg,
   earthTileset,
   player,
+  tilecoin,
   playerOldFrame
 ]
 

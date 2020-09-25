@@ -7,6 +7,7 @@ import keyboard from "root/Keyboard";
 import Camera from "root/Camera";
 import Trigger from "root/Trigger";
 import Laser from "root/Laser";
+import Collectable from "root/Collectable";
 import UserInterfaceHandler from "root/ui/UserInterfaceHandler";
 
 export default class GameScene extends Scene {
@@ -49,9 +50,12 @@ export default class GameScene extends Scene {
     window.endTrigger = this.endTrigger;
     this.mob = new Mob(this.tilemap, 33 * this.tilemap.tileRenderSize, 20 * this.tilemap.tileRenderSize);
     this.mob2 = new Mob(this.tilemap, 4 * this.tilemap.tileRenderSize, 16 * this.tilemap.tileRenderSize);
+    this.collectable = new Collectable(this.player,500,50);
     this.laser = new Laser(this.player, this.tilemap, map.dynamicObjectsMap.laserHitReg[0]);
+    this.laser2 = new Laser(this.player, this.tilemap, map.dynamicObjectsMap.laserHitReg[1]);
     this.userInterface = new UserInterfaceHandler();
     this.cameraHandledContainer.addChild(this.laser.container);
+    this.cameraHandledContainer.addChild(this.collectable.container);
     this.cameraHandledContainer.addChild(this.tilemap.container);
     this.cameraHandledContainer.addChild(this.player.container);
     this.cameraHandledContainer.addChild(this.mob.container);
@@ -67,10 +71,12 @@ export default class GameScene extends Scene {
     if (Game.gameplayState.paused)
       return;
     this.player.update(delta);
-    this.mob.update(delta, this.player);
-    this.mob2.update(delta, this.player);
-    this.camera.update();
+  //  this.mob.update(delta, this.player);
+    //this.mob2.update(delta, this.player);
     this.laser.update(this.player);
+    this.laser2.update(this.player);
+    this.camera.update();
+    this.collectable.update();
     this.userInterface.update(delta);
     this.endTrigger.update();
   }
