@@ -6,6 +6,7 @@ export default class Entity {
   _velocity = {x: 0, y: 0};
   tilemap;
   newPosRect = new PIXI.Rectangle(0,0,0,0);
+  isLanded = true;
 
   constructor(tilemap) {
     this.tilemap = tilemap;
@@ -16,6 +17,7 @@ export default class Entity {
       this._velocity.y += Game.gameplayState.gravityForce * 0.005 * this.tilemap.tileRenderSize * delta;
     }
 
+    let landed = false;
     let pos = this.getPosition();
     let vel = this.getVelocity();
     let collider, old_pos;
@@ -61,14 +63,14 @@ export default class Entity {
           //bounce on ground if no gravity
           vel.y = -1 * (vel.y / 2);
         }
-        this.onLanded();
+        landed = true;
 
         // Ground friction
         if (vel.x !== 0 && Game.gameplayState.isGravityEnabled) {
           if (vel.x > 0.15)
-            vel.x -= 0.35 * delta;
+            vel.x -= 0.6 * delta;
           else if (vel.x < -0.15)
-            vel.x += 0.35 * delta;
+            vel.x += 0.6 * delta;
           else
             vel.x = 0;
         }
@@ -84,6 +86,9 @@ export default class Entity {
 
     this.setPosition(pos);
     this.setVelocity(vel);
+    if (landed)
+      this.onLanded();
+    this.isLanded = landed;
   }
 
   jump() {
