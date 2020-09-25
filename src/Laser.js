@@ -1,5 +1,5 @@
 import Game from "root/main";
-import laserimg from 'assets/player/Player1.png';
+import laserimg from 'assets/player/Player1-old.png';
 import * as Collision from "root/Collision";
 import Trigger from "root/Trigger";
 

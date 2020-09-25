@@ -4,6 +4,7 @@ import moonTileset from 'assets/tilesets/moon.png';
 import earthTileset from 'assets/tilesets/earth.png';
 import tilesetimg from 'assets/tilesets/interface32x.png';
 import player from 'assets/player/Player1.png';
+import playerOldFrame from 'assets/player/Player1-old.png';
 
 const assetsToLoad = [
   prototypeTileset,
@@ -11,7 +12,8 @@ const assetsToLoad = [
   moonTileset,
   tilesetimg,
   earthTileset,
-  player
+  player,
+  playerOldFrame
 ]
 
 export default function loader(pixiLoader, cb) {

@@ -2,10 +2,12 @@ import Entity from "root/Player/Entity";
 import player from 'assets/player/Player1.png';
 import Game from "root/main";
 import keyboard from "root/Keyboard";
+import Animation from "root/Animation";
 
 export default class Player extends Entity {
 
   playerSize = 2;
+  playerAnimation;
   playerSprite;
   keysHandlers = {
     top: null,
@@ -20,7 +22,18 @@ export default class Player extends Entity {
 
   constructor(tilemap) {
     super(tilemap);
-    this.playerSprite = new PIXI.Sprite(Game.app.loader.resources[player].texture);
+    this.playerAnimation = new Animation(player, {x: 32, y: 56}, {
+      'idle': {
+        animated: false,
+        tileId: 0
+      },
+      'run': {
+        animated: true,
+        from: 1,
+        to: 7
+      }
+    }, 'idle', 100);
+    this.playerSprite = this.playerAnimation.sprite;
     this.resizeRatio = (tilemap.tileRenderSize * this.playerSize)/(this.playerSprite.height);
     this.playerSprite.scale.set(this.resizeRatio);
     this.playerSprite.anchor.set(0.5);
@@ -39,6 +52,15 @@ export default class Player extends Entity {
     this.keysHandlers.top.press = this.jump.bind(this);
     this.keysHandlers.bottom.press = this.startSneack.bind(this);
     this.keysHandlers.bottom.release = this.stopSneack.bind(this);
+    /*const run = () => this.playerAnimation.setCurrentAnimation('run');
+    const idle = (keyCheck) => () => {
+      if (!keyCheck.isDown)
+        this.playerAnimation.setCurrentAnimation('idle');
+    }
+    this.keysHandlers.right.press = run;
+    this.keysHandlers.left.press = run;
+    this.keysHandlers.right.release = idle(this.keysHandlers.left);
+    this.keysHandlers.left.release = idle(this.keysHandlers.right);*/
   }
 
   stopKeyboardListening() {
@@ -46,6 +68,7 @@ export default class Player extends Entity {
     this.keysHandlers.bottom.unsubscribe();
     this.keysHandlers.left.unsubscribe();
     this.keysHandlers.right.unsubscribe();
+    this.playerAnimation.unload();
   }
 
   jump() {
@@ -66,6 +89,14 @@ export default class Player extends Entity {
   }
 
   update(delta) {
+    if (this.isLanded) {
+      if (this.keysHandlers.right.isDown || this.keysHandlers.left.isDown)
+        this.playerAnimation.setCurrentAnimation('run');
+      else
+        this.playerAnimation.setCurrentAnimation('idle');
+    } else {
+      this.playerAnimation.setCurrentAnimation('idle');
+    }
     super.update(delta);
     if (Game.gameplayState.isGravityEnabled) {
       if (this.keysHandlers.right.isDown) {

@@ -1,6 +1,6 @@
 import Entity from "root/Player/Entity";
 import Game from "root/main";
-import player from 'assets/player/Player1.png';
+import player from 'assets/player/Player1-old.png';
 import * as Collision from "root/Collision";
 
 export default class Mob extends Entity {
