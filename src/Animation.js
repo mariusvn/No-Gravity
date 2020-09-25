@@ -14,6 +14,7 @@ export default class Animation {
   _currentAnimFrame = 0;
   _frameRect = new PIXI.Rectangle();
   _intervalId = -1;
+  _delay;
 
   /**
    * @param {string} texPath
@@ -27,6 +28,7 @@ export default class Animation {
     this._frameSize = frameSize;
     this._currentAnim = defaultAnim;
     this._animData = animationData;
+    this._delay = delay;
     window.anim = this;
 
     /* Setting up default frame */
@@ -36,16 +38,18 @@ export default class Animation {
     this._setCurrentAnimFrame();
     this._animTexture.frame = this._frameRect;
 
-    this._intervalId = setInterval(this._setCurrentAnimFrame.bind(this), delay);
 
     this.sprite = new PIXI.Sprite(this._animTexture);
+  }
+
+  start() {
+    this._intervalId = setInterval(this._setCurrentAnimFrame.bind(this), this._delay);
   }
 
   _setCurrentAnimFrame() {
     const current = this._animData[this._currentAnim];
     if (!current)
       return;
-
     if (current.animated) {
       if (!this._currentAnimFrame)
         this._currentAnimFrame = current.from - 1;
@@ -74,6 +78,8 @@ export default class Animation {
    * @param {string} animName
    */
   setCurrentAnimation(animName) {
-    this._currentAnim = animName;
+    if (animName !== this._currentAnim) {
+      this._currentAnim = animName;
+    }
   }
 }

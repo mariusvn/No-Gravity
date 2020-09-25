@@ -8,21 +8,22 @@ export default class Laser {
   _canHitPlayer = true;
   _active = true;
   _intervalId;
-  _laserlenght;
+  _laserlength;
   delay;
 
-  constructor(player, tilemap, {x, y, lenght, delay, direction}) {
+  constructor(player, tilemap, {x, y, length, delay, direction}) {
     x = x * tilemap.tileRenderSize;
     y = y * tilemap.tileRenderSize;
-    for (let i = 0; i <= lenght - 1; i++) {
-
+    for (let i = 0; i <= length - 1; i++) {
 
       this.sprite.push(new PIXI.Sprite(Game.app.loader.resources[laserimg].texture));
+      this.sprite[i].width = tilemap.tileRenderSize;
+      this.sprite[i].height = tilemap.tileRenderSize;
       if (direction === "top") {
         this.sprite[i].y = y - this.sprite[i].height * (i + 1);
         this.sprite[i].x = x
       } else if (direction === "bottom") {
-        this.sprite[i].y = y + this.sprite[i].height * (i + 1);
+        this.sprite[i].y = y + this.sprite[i].height * i;
         this.sprite[i].x = x
       } else if (direction === "left") {
         this.sprite[i].angle = -90;
@@ -34,7 +35,7 @@ export default class Laser {
         this.sprite[i].x = x + this.sprite[i].height * (i + 1);
       }
 
-      this._laserlenght = this.sprite[i].height;
+      this._laserlength = this.sprite[i].height;
       this.container.addChild(this.sprite[i]);
     }
 
@@ -90,7 +91,7 @@ export default class Laser {
     clearInterval(this._intervalId);
   }
 
-  update(player) {
+  update() {
     if (this._active)
       this.laserHitReg.update()
   }

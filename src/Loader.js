@@ -1,5 +1,3 @@
-import prototypeTileset from 'assets/tilesets/prototype.png';
-import prototypePlayer from 'assets/player/prototype.png';
 import moonTileset from 'assets/tilesets/moon.png';
 import earthTileset from 'assets/tilesets/earth.png';
 import tilesetimg from 'assets/tilesets/interface32x.png';
@@ -8,8 +6,6 @@ import playerOldFrame from 'assets/player/Player1-old.png';
 import tilecoin from 'assets/tilesets/goldCoin1.png';
 
 const assetsToLoad = [
-  prototypeTileset,
-  prototypePlayer,
   moonTileset,
   tilesetimg,
   earthTileset,

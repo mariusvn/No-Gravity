@@ -20,7 +20,7 @@ export default class Player extends Entity {
   maxSpeed = 8;
   resizeRatio = 0;
 
-  constructor(tilemap) {
+  constructor(tilemap, x, y) {
     super(tilemap);
     this.playerAnimation = new Animation(player, {x: 32, y: 56}, {
       'idle': {
@@ -39,8 +39,8 @@ export default class Player extends Entity {
     this.playerSprite.anchor.set(0.5);
     this.playerSprite.x = this.playerSprite.width / 2;
     this.playerSprite.y = this.playerSprite.height / 2;
-    this.container.x = 2 * this.tilemap.tileRenderSize;
-    this.container.y = 23 * this.tilemap.tileRenderSize;
+    this.container.x = x * this.tilemap.tileRenderSize;
+    this.container.y = y * this.tilemap.tileRenderSize;
     this.container.addChild(this.playerSprite);
   }
 
@@ -52,6 +52,7 @@ export default class Player extends Entity {
     this.keysHandlers.top.press = this.jump.bind(this);
     this.keysHandlers.bottom.press = this.startSneack.bind(this);
     this.keysHandlers.bottom.release = this.stopSneack.bind(this);
+    this.playerAnimation.start();
     /*const run = () => this.playerAnimation.setCurrentAnimation('run');
     const idle = (keyCheck) => () => {
       if (!keyCheck.isDown)

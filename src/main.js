@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js';
 import SceneManager from "./Scenes/SceneManager";
-import testScene from "./Scenes/testScene/testScene";
 import Loader from "./Loader";
 import MainMenu from "./Scenes/MainMenu/mainMenu";
 import Event from "root/Event";
@@ -8,6 +7,7 @@ import Tileset from "root/Tileset";
 import earthTileset from "assets/tilesets/earth.png";
 import moonTileset from "assets/tilesets/moon.png";
 import Tilemap from "root/Tilemap";
+import Level1 from "root/Scenes/level1/level1";
 
 
 global.PIXI = PIXI;
@@ -28,7 +28,6 @@ export default class Game {
     document.body.appendChild(Game.app.view);
     if (Game.app.renderer.height > 500)
       PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-    //TODO remove frame dependency
 
     const mainContainer = new PIXI.Container();
     Game.sceneManager = new SceneManager(mainContainer);
@@ -39,9 +38,9 @@ export default class Game {
         moon: new Tileset(moonTileset, {x: 32, y: 32})
       };
       Game.app.ticker.add(delta => this.update(delta));
-      Game.sceneManager.addScene(testScene, 'testScene');
       Game.sceneManager.addScene(MainMenu, 'MainMenu');
-      Game.sceneManager.activeScene = 'testScene';
+      Game.sceneManager.addScene(Level1, 'level1');
+      Game.sceneManager.activeScene = 'level1';
     });
     window.game = Game;
   }

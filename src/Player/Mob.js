@@ -14,8 +14,8 @@ export default class Mob extends Entity {
     this.sprite = new PIXI.Sprite(Game.app.loader.resources[player].texture);
     const resizeRatio = (tilemap.tileRenderSize * 2) / (this.sprite.height);
     this.sprite.scale.set(resizeRatio);
-    this.container.y = y;
-    this.container.x = x;
+    this.container.y = y * tilemap.tileRenderSize;
+    this.container.x = x * tilemap.tileRenderSize;
     this.container.addChild(this.sprite);
     this.setVelocity({x: 8, y: this.getVelocity().y});
   }

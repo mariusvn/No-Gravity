@@ -1,13 +1,13 @@
-import testmapCsv from 'assets/maps/test/test-world.csv';
-import testDynamicMap from 'assets/maps/test/dynamicMap.json';
+import level1Csv from 'assets/maps/level-1/level-1.csv';
+import level1Json from 'assets/maps/level-1/level-1.json';
 
 /**
  * @type {Object.<string, MapEntry>}
  */
 const MapRegistry = {
-  test: {
-    tileMap: testmapCsv,
-    dynamicObjectsMap: testDynamicMap
+  level1: {
+    tileMap: level1Csv,
+    dynamicObjectsMap: level1Json
   }
 }
 
