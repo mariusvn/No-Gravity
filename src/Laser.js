@@ -12,7 +12,7 @@ export default class Laser{
   _laserlenght;
   delay;
   constructor(player, tilemap, {x, y, lenght, delay, direction}) {
-    for(let i = 0; i <= lenght; i ++){
+    for(let i = 0; i <= lenght-1; i ++){
      // console.log(i);
       this.sprite.push(new PIXI.Sprite(Game.app.loader.resources[laserimg].texture));
       if (direction === "top"){
@@ -24,14 +24,14 @@ export default class Laser{
         this.sprite[i].x = x
       }
       else if(direction === "left") {
-        this.sprite[i].angle = 90;
-        this.sprite[i].y = y
-        this.sprite[i].x = x + this.sprite[i].height*(i+1);
-      }
-      else {
         this.sprite[i].angle = -90;
         this.sprite[i].y = y
         this.sprite[i].x = x - this.sprite[i].height*(i+1);
+      }
+      else {
+        this.sprite[i].angle = 90;
+        this.sprite[i].y = y
+        this.sprite[i].x = x + this.sprite[i].height*(i+1);
       }
 
      // this.sprite[i].x = x;
@@ -40,15 +40,27 @@ export default class Laser{
       this.container.addChild(this.sprite[i]);
     }
    // this._laserlenght = this.sprite.length * this.sprite[0].height;
-    this.laserHitReg = new Trigger(
-      new PIXI.Rectangle(
-        this.sprite[0].x,
-        this.sprite[this.sprite.length-1].y,
-        this.sprite[0].width,
-        this.sprite[0].height*this.sprite.length
-      ),
-      player.container
-    );
+    if (direction === "top" || direction === "bottom"){
+      this.laserHitReg = new Trigger(
+        new PIXI.Rectangle(
+          this.sprite[0].x,
+          this.sprite[(direction === "bottom") ? 0: this.sprite.length-1].y,
+          this.sprite[0].width,
+          this.sprite[0].height*this.sprite.length
+        ),
+        player.container
+      );
+    }else{
+      this.laserHitReg = new Trigger(
+        new PIXI.Rectangle(
+          this.sprite[(direction === "right") ? 0: this.sprite.length-1].x -((direction === "right") ? this.sprite[0].height: 0),
+          this.sprite[0].y + ((direction === "right")? 0: -1) *this.sprite[0].width,
+          this.sprite[0].height*this.sprite.length,
+          this.sprite[0].width
+        ),
+        player.container
+      );
+    }
     console.log(this.sprite[0].y)
     this.delay = delay;
     this._intervalId = this.startInterval();
