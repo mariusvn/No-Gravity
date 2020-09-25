@@ -4,6 +4,8 @@ import tilesetimg from 'assets/tilesets/interface32x.png';
 import player from 'assets/player/Player1.png';
 import playerOldFrame from 'assets/player/Player1-old.png';
 import tilecoin from 'assets/tilesets/goldCoin1.png';
+import laser from 'assets/tilesets/laser.png';
+import laserShooter from 'assets/tilesets/laser-shooter.png';
 
 const assetsToLoad = [
   moonTileset,
@@ -11,7 +13,9 @@ const assetsToLoad = [
   earthTileset,
   player,
   tilecoin,
-  playerOldFrame
+  playerOldFrame,
+  laser,
+  laserShooter
 ]
 
 export default function loader(pixiLoader, cb) {

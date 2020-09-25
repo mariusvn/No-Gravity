@@ -1,5 +1,6 @@
 import Game from "root/main";
-import laserimg from 'assets/player/Player1-old.png';
+import laserimg from 'assets/tilesets/laser.png';
+import laserShooterImg from 'assets/tilesets/laser-shooter.png';
 import Trigger from "root/Trigger";
 
 export default class Laser {
@@ -12,12 +13,53 @@ export default class Laser {
   delay;
 
   constructor(player, tilemap, {x, y, length, delay, direction}) {
+    if (direction === 'top') y++;
+    if (direction === 'left') x++;
     x = x * tilemap.tileRenderSize;
     y = y * tilemap.tileRenderSize;
+    const blockSize = tilemap.tileRenderSize;
+    const pixelSize = tilemap.tileRenderSize / 32;
+
+
+    const laserShooter = new PIXI.Sprite(Game.app.loader.resources[laserShooterImg].texture)
+
+    laserShooter.width = blockSize;
+    laserShooter.height = pixelSize * 7;
+    laserShooter.x = x;
+    laserShooter.y = y;
+    laserShooter.anchor.set(0.5, 1);
+
+    switch (direction) {
+      case 'left':
+        y += pixelSize * 2;
+      case 'right':
+        y += blockSize / 2 - pixelSize;
+        laserShooter.y += blockSize / 2;
+        break;
+      case 'top':
+      case 'bottom':
+        x += blockSize / 2 - pixelSize;
+        laserShooter.x += blockSize / 2;
+        break;
+    }
+
+    switch (direction) {
+      case 'left':
+        laserShooter.angle = -90;
+        break;
+      case 'right':
+        laserShooter.angle = 90;
+        break;
+      case 'bottom':
+        laserShooter.angle = 180;
+        break;
+    }
+
+
     for (let i = 0; i <= length - 1; i++) {
 
       this.sprite.push(new PIXI.Sprite(Game.app.loader.resources[laserimg].texture));
-      this.sprite[i].width = tilemap.tileRenderSize;
+      this.sprite[i].width = pixelSize * 2;
       this.sprite[i].height = tilemap.tileRenderSize;
       if (direction === "top") {
         this.sprite[i].y = y - this.sprite[i].height * (i + 1);
@@ -60,6 +102,8 @@ export default class Laser {
         player.container
       );
     }
+
+    this.container.addChild(laserShooter);
 
     this.delay = delay;
     this._intervalId = this.startInterval();

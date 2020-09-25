@@ -12,6 +12,7 @@ export default class Player extends Entity {
   keysHandlers = {
     top: null,
     left: null,
+    leftQwerty: null,
     right: null,
     bottom: null,
   }
@@ -30,7 +31,14 @@ export default class Player extends Entity {
       'run': {
         animated: true,
         from: 1,
-        to: 7
+        to: 7,
+        loop: true
+      },
+      'jump': {
+        animated: true,
+        from: 10,
+        to: 13,
+        loop: false
       }
     }, 'idle', 100);
     this.playerSprite = this.playerAnimation.sprite;
@@ -48,6 +56,7 @@ export default class Player extends Entity {
     this.keysHandlers.top = keyboard(' ');
     this.keysHandlers.bottom = keyboard('ctrl');
     this.keysHandlers.left = keyboard('q');
+    this.keysHandlers.leftQwerty = keyboard('a');
     this.keysHandlers.right = keyboard('d');
     this.keysHandlers.top.press = this.jump.bind(this);
     this.keysHandlers.bottom.press = this.startSneack.bind(this);
@@ -67,6 +76,7 @@ export default class Player extends Entity {
   stopKeyboardListening() {
     this.keysHandlers.top.unsubscribe();
     this.keysHandlers.bottom.unsubscribe();
+    this.keysHandlers.leftQwerty.unsubscribe();
     this.keysHandlers.left.unsubscribe();
     this.keysHandlers.right.unsubscribe();
     this.playerAnimation.unload();
@@ -90,13 +100,15 @@ export default class Player extends Entity {
   }
 
   update(delta) {
+    //this.playerAnimation.setCurrentAnimation('jump');
     if (this.isLanded) {
-      if (this.keysHandlers.right.isDown || this.keysHandlers.left.isDown)
+      if (this.keysHandlers.right.isDown || (this.keysHandlers.left.isDown || this.keysHandlers.leftQwerty.isDown))
         this.playerAnimation.setCurrentAnimation('run');
       else
         this.playerAnimation.setCurrentAnimation('idle');
     } else {
-      this.playerAnimation.setCurrentAnimation('idle');
+      if (Game.gameplayState.isGravityEnabled)
+        this.playerAnimation.setCurrentAnimation('jump');
     }
     super.update(delta);
     if (Game.gameplayState.isGravityEnabled) {
@@ -106,7 +118,7 @@ export default class Player extends Entity {
         if (vel.x < this.maxSpeed * this.tilemap.tileRenderSize * 0.03)
           vel.x += 0.7 * delta * this.tilemap.tileRenderSize * 0.04;
       }
-      if (this.keysHandlers.left.isDown) {
+      if (this.keysHandlers.left.isDown || this.keysHandlers.leftQwerty.isDown) {
         this.playerSprite.scale.x = -1 * this.resizeRatio;
         const vel = this.getVelocity();
         if (vel.x > -1 * this.maxSpeed * this.tilemap.tileRenderSize * 0.03)

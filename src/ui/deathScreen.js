@@ -40,11 +40,6 @@ export default class DeathScreen extends UserInterface {
     this.container.y = this.screenSize.y / 2 - this.background.height / 2;
     this.container.addChild(this.background);
     this.container.addChild(this.text);
-    // TODO test key to trigger death screen animation
-    const a = keyboard('g');
-    a.press = () => {
-      Game.events.triggerEvent('gameplay:death');
-    }
     Game.events.addEventHandler('gameplay:death', this.startAnim.bind(this));
   }
 
