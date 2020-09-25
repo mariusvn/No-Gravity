@@ -82,6 +82,7 @@ export default class Animation {
   setCurrentAnimation(animName) {
     if (animName !== this._currentAnim) {
       this._currentAnim = animName;
+      this._currentAnimFrame = this._animData[this._currentAnim].start;
       this._setCurrentAnimFrame();
     }
   }
