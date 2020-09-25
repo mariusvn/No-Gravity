@@ -102,7 +102,10 @@ export default class Player extends Entity {
   update(delta) {
     //this.playerAnimation.setCurrentAnimation('jump');
     if (this.isLanded) {
-      if (this.keysHandlers.right.isDown || (this.keysHandlers.left.isDown || this.keysHandlers.leftQwerty.isDown))
+      if (
+        this.keysHandlers.right.isDown ||
+        (this.keysHandlers.left.isDown || this.keysHandlers.leftQwerty.isDown)
+      )
         this.playerAnimation.setCurrentAnimation('run');
       else
         this.playerAnimation.setCurrentAnimation('idle');
