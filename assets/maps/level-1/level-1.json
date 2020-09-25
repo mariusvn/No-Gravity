@@ -11,11 +11,11 @@
 	},
 	"laserHitReg":[
 		{
-			"x": 14,
+			"x": 19,
 			"y": 11,
 			"length": 6,
 			"delay": -1,
-			"direction": "right"
+			"direction": "left"
 		},
 		{
 			"x": 30,
@@ -33,10 +33,10 @@
 		},
 		{
 			"x": 11,
-			"y": 1,
+			"y": 4,
 			"length": 4,
 			"delay": 1200,
-			"direction": "bottom"
+			"direction": "top"
 		}
 	],
 	"ennemies": [
