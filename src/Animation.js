@@ -53,7 +53,7 @@ export default class Animation {
     if (current.animated) {
       if (!this._currentAnimFrame)
         this._currentAnimFrame = current.from - 1;
-      if (this._currentAnimFrame >= current.to) {
+      if (this._currentAnimFrame >= current.to && current.loop) {
         this._currentAnimFrame = current.from;
         this._frameRect.x = current.from * this._frameRect.width;
       } else {
@@ -80,6 +80,7 @@ export default class Animation {
   setCurrentAnimation(animName) {
     if (animName !== this._currentAnim) {
       this._currentAnim = animName;
+      this._setCurrentAnimFrame();
     }
   }
 }

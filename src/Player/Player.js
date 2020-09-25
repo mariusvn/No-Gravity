@@ -30,7 +30,14 @@ export default class Player extends Entity {
       'run': {
         animated: true,
         from: 1,
-        to: 7
+        to: 7,
+        loop: true
+      },
+      'jump': {
+        animated: true,
+        from: 10,
+        to: 13,
+        loop: false
       }
     }, 'idle', 100);
     this.playerSprite = this.playerAnimation.sprite;
@@ -90,13 +97,15 @@ export default class Player extends Entity {
   }
 
   update(delta) {
+    //this.playerAnimation.setCurrentAnimation('jump');
     if (this.isLanded) {
       if (this.keysHandlers.right.isDown || this.keysHandlers.left.isDown)
         this.playerAnimation.setCurrentAnimation('run');
       else
         this.playerAnimation.setCurrentAnimation('idle');
     } else {
-      this.playerAnimation.setCurrentAnimation('idle');
+      if (Game.gameplayState.isGravityEnabled)
+        this.playerAnimation.setCurrentAnimation('jump');
     }
     super.update(delta);
     if (Game.gameplayState.isGravityEnabled) {
