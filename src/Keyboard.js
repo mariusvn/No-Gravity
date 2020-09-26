@@ -8,7 +8,7 @@ export default function keyboard(value) {
   key.release = undefined;
   //The `downHandler`
   key.downHandler = event => {
-    if (event.key === key.value) {
+    if (event.key === key.value || event.key === key.value.toUpperCase()) {
       if (key.isUp && key.press) key.press();
       key.isDown = true;
       key.isUp = false;
@@ -18,7 +18,7 @@ export default function keyboard(value) {
 
   //The `upHandler`
   key.upHandler = event => {
-    if (event.key === key.value) {
+    if (event.key === key.value || event.key === key.value.toUpperCase()) {
       if (key.isDown && key.release) key.release();
       key.isDown = false;
       key.isUp = true;
