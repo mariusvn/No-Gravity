@@ -4,7 +4,7 @@ import Game from "root/main";
 export default class GravityIndicator extends UserInterface {
 
   background = new PIXI.Graphics();
-  gravityText = new PIXI.Text("Gravity:", {
+  gravityText = new PIXI.Text("Gravity (E):", {
     fontFamily: 'Londrina Solid',
     fill: '#fff'
   });
