@@ -40,7 +40,7 @@ export default class Game {
       Game.app.ticker.add(delta => this.update(delta));
       Game.sceneManager.addScene(MainMenu, 'MainMenu');
       Game.sceneManager.addScene(Level1, 'level1');
-      Game.sceneManager.activeScene = 'level1';
+      Game.sceneManager.activeScene = 'MainMenu';
     });
     window.game = Game;
   }
