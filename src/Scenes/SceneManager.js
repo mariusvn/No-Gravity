@@ -31,7 +31,6 @@ export default class SceneManager {
    * @param {string} name
    */
   addScene(sceneClass, name) {
-    this._scenes[name] = new sceneClass();
     this._scenesClasses[name] = sceneClass;
   }
 
@@ -65,12 +64,13 @@ export default class SceneManager {
    * @param {string} value
    */
   set activeScene(value) {
-    if (this._scenes[value]) {
+    if (this._scenesClasses[value]) {
       if (this._activeScene) {
         this._scenes[this._activeScene].onSceneEnd();
         this._parentContainer.removeChild(this._scenes[this._activeScene].getContainer());
       }
       this._activeScene = value;
+      this._scenes[value] = new this._scenesClasses[value]();
       this._parentContainer.addChild(this._scenes[value].getContainer());
       this._scenes[value].onSceneStart();
     } else throw new TypeError(`Scene ${value} doesnt exists`);

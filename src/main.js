@@ -8,6 +8,9 @@ import earthTileset from "assets/tilesets/earth.png";
 import moonTileset from "assets/tilesets/moon.png";
 import Tilemap from "root/Tilemap";
 import Level1 from "root/Scenes/level1/level1";
+import HowToPlayScene from "root/Scenes/howToPlay/howToPlayScene";
+import creditScene from "root/Scenes/credits/creditScene";
+import levelsScene from "root/Scenes/levels/levelsScene";
 
 
 global.PIXI = PIXI;
@@ -39,6 +42,9 @@ export default class Game {
       };
       Game.app.ticker.add(delta => this.update(delta));
       Game.sceneManager.addScene(MainMenu, 'MainMenu');
+      Game.sceneManager.addScene(HowToPlayScene, 'HowToPlay');
+      Game.sceneManager.addScene(creditScene, 'credits');
+      Game.sceneManager.addScene(levelsScene, 'levels');
       Game.sceneManager.addScene(Level1, 'level1');
       Game.sceneManager.activeScene = 'MainMenu';
     });
