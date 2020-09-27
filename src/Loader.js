@@ -8,6 +8,8 @@ import keyboardLayout from 'assets/tilesets/keyboard-layout.png';
 import laserShooter from 'assets/tilesets/laser-shooter.png';
 import miscTileset from 'assets/tilesets/misc.png';
 import logo from 'assets/tilesets/logo.png';
+import sawAnimImg from 'assets/tilesets/buzzsaw.png';
+import flagAnim from 'assets/tilesets/flag.png';
 
 const assetsToLoad = [
   moonTileset,
@@ -19,7 +21,9 @@ const assetsToLoad = [
   laserShooter,
   keyboardLayout,
   miscTileset,
-  logo
+  logo,
+  sawAnimImg,
+  flagAnim
 ]
 
 export default function loader(pixiLoader, cb) {

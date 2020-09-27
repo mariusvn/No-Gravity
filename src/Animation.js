@@ -16,6 +16,8 @@ export default class Animation {
   _intervalId = -1;
   _delay;
   _isPaused = false;
+  onAnimationFinished = undefined;
+  _lastestAnimFinished = '';
 
   /**
    * @param {string} texPath
@@ -64,12 +66,19 @@ export default class Animation {
     if (!current)
       return;
     if (current.animated) {
-      if (!this._currentAnimFrame)
+      if (this._currentAnimFrame === undefined)
         this._currentAnimFrame = current.from - 1;
       if (this._currentAnimFrame >= current.to) {
         if (current.loop) {
           this._currentAnimFrame = current.from;
           this._frameRect.x = current.from * this._frameRect.width;
+        } else {
+          if (typeof this.onAnimationFinished === 'function') {
+            if (this._lastestAnimFinished !== this._currentAnim) {
+              this._lastestAnimFinished = this._currentAnim;
+              this.onAnimationFinished(this._currentAnim);
+            }
+          }
         }
       } else {
         this._currentAnimFrame++;
