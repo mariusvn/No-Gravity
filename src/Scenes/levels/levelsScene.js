@@ -13,8 +13,16 @@ export default class LevelsScene extends Scene {
 
   _levels = [
     {
+      name: 'Tutorial',
+      id: 'level0'
+    },
+    {
       name: 'Level 1',
       id: 'level1'
+    },
+    {
+      name: 'Level 2',
+      id: 'level2'
     },
   ];
 

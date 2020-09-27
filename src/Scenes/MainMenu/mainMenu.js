@@ -49,7 +49,7 @@ export default class MainMenu extends Scene {
   }
 
   startGame() {
-    Game.sceneManager.activeScene = 'level1';
+    Game.sceneManager.activeScene = 'level0';
   }
 
   goToHowToPlay() {

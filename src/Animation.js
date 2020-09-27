@@ -15,6 +15,7 @@ export default class Animation {
   _frameRect = new PIXI.Rectangle();
   _intervalId = -1;
   _delay;
+  _isPaused = false;
 
   /**
    * @param {string} texPath
@@ -43,10 +44,22 @@ export default class Animation {
   }
 
   start() {
+    if (this._intervalId !== -1)
+      this.stop();
     this._intervalId = setInterval(this._setCurrentAnimFrame.bind(this), this._delay);
   }
 
+  pause() {
+    this._isPaused = true;
+  }
+
+  resume() {
+    this._isPaused = false;
+  }
+
   _setCurrentAnimFrame() {
+    if (this._isPaused)
+      return;
     const current = this._animData[this._currentAnim];
     if (!current)
       return;
