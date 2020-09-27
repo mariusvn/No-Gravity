@@ -69,7 +69,7 @@ export default class Animation {
     this._animTexture.frame = this._frameRect;
   }
 
-  unload() {
+  stop() {
     if (this._intervalId !== -1) {
       clearInterval(this._intervalId);
       this._intervalId = -1;

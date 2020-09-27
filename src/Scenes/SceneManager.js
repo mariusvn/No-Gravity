@@ -39,7 +39,7 @@ export default class SceneManager {
       return;
     const oldActiveScene = this.activeScene;
     this._activeScene = undefined;
-    // unload old instance
+    // stop old instance
     this._scenes[oldActiveScene].onSceneEnd();
     this._parentContainer.removeChild(this._scenes[oldActiveScene].getContainer());
     delete this._scenes[oldActiveScene];
