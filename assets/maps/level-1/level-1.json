@@ -12,29 +12,29 @@
 	"laserHitReg":[
 		{
 			"x": 19,
-			"y": 11,
+			"y": 10,
 			"length": 6,
 			"delay": -1,
 			"direction": "left"
 		},
 		{
 			"x": 30,
-			"y": 6,
-			"length": 4,
+			"y": 7,
+			"length": 3,
 			"delay": 700,
 			"direction": "bottom"
 		},
 		{
-			"x": 22,
+			"x": 23,
 			"y": 5,
-			"length": 5,
+			"length": 3,
 			"delay": 1000,
 			"direction": "right"
 		},
 		{
 			"x": 11,
-			"y": 4,
-			"length": 4,
+			"y": 3,
+			"length": 3,
 			"delay": 1200,
 			"direction": "top"
 		}

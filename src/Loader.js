@@ -6,6 +6,8 @@ import tilecoin from 'assets/tilesets/goldCoin1.png';
 import laser from 'assets/tilesets/laser.png';
 import keyboardLayout from 'assets/tilesets/keyboard-layout.png';
 import laserShooter from 'assets/tilesets/laser-shooter.png';
+import miscTileset from 'assets/tilesets/misc.png';
+import logo from 'assets/tilesets/logo.png';
 
 const assetsToLoad = [
   moonTileset,
@@ -15,7 +17,9 @@ const assetsToLoad = [
   playerOldFrame,
   laser,
   laserShooter,
-  keyboardLayout
+  keyboardLayout,
+  miscTileset,
+  logo
 ]
 
 export default function loader(pixiLoader, cb) {

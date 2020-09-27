@@ -62,15 +62,7 @@ export default class Player extends Entity {
     this.keysHandlers.bottom.press = this.startSneack.bind(this);
     this.keysHandlers.bottom.release = this.stopSneack.bind(this);
     this.playerAnimation.start();
-    /*const run = () => this.playerAnimation.setCurrentAnimation('run');
-    const idle = (keyCheck) => () => {
-      if (!keyCheck.isDown)
-        this.playerAnimation.setCurrentAnimation('idle');
-    }
-    this.keysHandlers.right.press = run;
-    this.keysHandlers.left.press = run;
-    this.keysHandlers.right.release = idle(this.keysHandlers.left);
-    this.keysHandlers.left.release = idle(this.keysHandlers.right);*/
+    Game.events.addEventHandler('gameplay:gravity-switch', this.onGravityChanges.bind(this));
   }
 
   stopKeyboardListening() {
@@ -79,7 +71,8 @@ export default class Player extends Entity {
     this.keysHandlers.leftQwerty.unsubscribe();
     this.keysHandlers.left.unsubscribe();
     this.keysHandlers.right.unsubscribe();
-    this.playerAnimation.unload();
+    Game.events.removeEventHandler('gameplay:gravity-switch', this.onGravityChanges.bind(this));
+    this.playerAnimation.stop();
   }
 
   jump() {
@@ -100,7 +93,6 @@ export default class Player extends Entity {
   }
 
   update(delta) {
-    //this.playerAnimation.setCurrentAnimation('jump');
     if (this.isLanded) {
       if (
         this.keysHandlers.right.isDown ||
@@ -132,6 +124,13 @@ export default class Player extends Entity {
         vel.y += 0.2 * delta * this.tilemap.tileRenderSize * 0.04;
       }
     }
+  }
+
+  onGravityChanges(isOn) {
+    if (isOn)
+      this.playerAnimation.start();
+    else
+      this.playerAnimation.stop();
   }
 
   onLanded() {

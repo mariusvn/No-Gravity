@@ -18,8 +18,8 @@ export default class Tileset {
 
   generateTileSpriteArray() {
     const dimensions = {
-      x: Math.floor(this.texture.width / this.tileSize.x),
-      y: Math.floor(this.texture.height / this.tileSize.y)
+      x: Math.floor(this.texture.baseTexture.width / this.tileSize.x),
+      y: Math.floor(this.texture.baseTexture.height / this.tileSize.y)
     };
 
     for(let y = 0; y < dimensions.y; y++) {
@@ -39,7 +39,6 @@ export default class Tileset {
 
   getSprite(index) {
     if (index > this.tileTextures.length) {
-      debugger;
       throw new TypeError(`Cannot find ${index}th element in the tileset, maximum: ${this.tileTextures.length}`);
     }
       return new PIXI.Sprite(this.tileTextures[index]);

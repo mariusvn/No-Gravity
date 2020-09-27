@@ -1,6 +1,7 @@
 import Scene from "root/Scenes/Scene";
 import Button from "root/ui/Button";
 import Game from "root/main";
+import logoImg from 'assets/tilesets/logo.png';
 
 export default class MainMenu extends Scene {
 
@@ -8,9 +9,16 @@ export default class MainMenu extends Scene {
   levelsButton;
   creditsButton;
   howToPlay;
+  logoSprite;
 
   constructor() {
     super();
+    this.logoSprite = new PIXI.Sprite(Game.app.loader.resources[logoImg].texture);
+    this.logoSprite.width = this.logoSprite.width * 2;
+    this.logoSprite.height = this.logoSprite.height * 2;
+    this.logoSprite.x = Game.app.screen.width / 2 - this.logoSprite.width / 2;
+    this.logoSprite.y = Game.app.screen.height / 2 - 450;
+
     this.startButton = new Button('Play');
     this.startButton.x = Game.app.screen.width / 2 - this.startButton.width / 2;
     this.startButton.y = Game.app.screen.height / 2 - 150;
@@ -33,6 +41,7 @@ export default class MainMenu extends Scene {
     this.creditsButton.onClick = this.goToCredits.bind(this);
 
 
+    this.sceneContainer.addChild(this.logoSprite);
     this.sceneContainer.addChild(this.startButton);
     this.sceneContainer.addChild(this.howToPlay);
     this.sceneContainer.addChild(this.creditsButton);

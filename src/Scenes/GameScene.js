@@ -9,11 +9,14 @@ import Trigger from "root/Trigger";
 import Laser from "root/Laser";
 import Collectable from "root/Collectable";
 import UserInterfaceHandler from "root/ui/UserInterfaceHandler";
+import StaticTilemap from "root/StaticTilemap";
+import backTilesetImg from 'assets/tilesets/misc.png';
 
 export default class GameScene extends Scene {
 
   player;
   tilemap;
+  backTileMap;
   keysHandlers = {
     gravitySwitch: null
   };
@@ -31,6 +34,7 @@ export default class GameScene extends Scene {
   constructor(map) {
     super();
     this.tilemap = new Tilemap(map, Game.app.screen.height);
+    this.backTileMap = new StaticTilemap(map.backTileMap, Game.app.screen.height, backTilesetImg);
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
     window.player = this.player;
     window.tilemap = this.tilemap;
@@ -70,6 +74,7 @@ export default class GameScene extends Scene {
       this.cameraHandledContainer.addChild(collectable.container);
     }
     this.userInterface = new UserInterfaceHandler();
+    this.cameraHandledContainer.addChild(this.backTileMap.container);
     this.cameraHandledContainer.addChild(this.tilemap.container);
     this.cameraHandledContainer.addChild(this.player.container);
     this.camera = new Camera(this.player.container, this.cameraHandledContainer);
@@ -132,6 +137,10 @@ export default class GameScene extends Scene {
 
   onPlayerReachEnd() {
     console.info('Player reached end');
+    for (const collectable of this.collectables) {
+      if (!collectable.isPick())
+        return;
+    }
     Game.events.triggerEvent('scene:restart');
   }
 }
