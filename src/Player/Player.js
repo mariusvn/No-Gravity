@@ -93,7 +93,7 @@ export default class Player extends Entity {
   }
 
   update(delta) {
-    if (this.isLanded) {
+    if (this.isLanded && Game.gameplayState.isGravityEnabled) {
       if (
         this.keysHandlers.right.isDown ||
         (this.keysHandlers.left.isDown || this.keysHandlers.leftQwerty.isDown)
@@ -102,8 +102,7 @@ export default class Player extends Entity {
       else
         this.playerAnimation.setCurrentAnimation('idle');
     } else {
-      if (Game.gameplayState.isGravityEnabled)
-        this.playerAnimation.setCurrentAnimation('jump');
+      this.playerAnimation.setCurrentAnimation('jump');
     }
     super.update(delta);
     if (Game.gameplayState.isGravityEnabled) {
@@ -128,9 +127,9 @@ export default class Player extends Entity {
 
   onGravityChanges(isOn) {
     if (isOn)
-      this.playerAnimation.start();
+      this.playerAnimation.resume();
     else
-      this.playerAnimation.stop();
+      this.playerAnimation.pause();
   }
 
   onLanded() {

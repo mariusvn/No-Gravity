@@ -38,6 +38,7 @@ export default class GameScene extends Scene {
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
     window.player = this.player;
     window.tilemap = this.tilemap;
+    this.cameraHandledContainer.addChild(this.backTileMap.container);
 
     if (map.dynamicObjectsMap && map.dynamicObjectsMap.endTrigger) {
       const triggerPos = this.tilemap.getPixelsFromTileCoord(map.dynamicObjectsMap.endTrigger);
@@ -74,7 +75,6 @@ export default class GameScene extends Scene {
       this.cameraHandledContainer.addChild(collectable.container);
     }
     this.userInterface = new UserInterfaceHandler();
-    this.cameraHandledContainer.addChild(this.backTileMap.container);
     this.cameraHandledContainer.addChild(this.tilemap.container);
     this.cameraHandledContainer.addChild(this.player.container);
     this.camera = new Camera(this.player.container, this.cameraHandledContainer);
