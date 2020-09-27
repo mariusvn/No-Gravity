@@ -4,6 +4,6 @@ import MapRegistry from "root/MapRegistry";
 export default class Level1 extends GameScene {
 
   constructor() {
-    super(MapRegistry.level1);
+    super(MapRegistry.level1, 'level2');
   }
 }

@@ -27,12 +27,15 @@ export default class GameScene extends Scene {
   lasers = [];
   mobs = [];
   collectables = [];
+  nextScene = '';
 
   /**
    * @param {MapEntry} map
+   * @param {string} nextScene
    */
-  constructor(map) {
+  constructor(map, nextScene = 'MainMenu') {
     super();
+    this.nextScene = nextScene;
     this.tilemap = new Tilemap(map, Game.app.screen.height);
     this.backTileMap = new StaticTilemap(map.backTileMap, Game.app.screen.height, backTilesetImg);
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
@@ -141,7 +144,7 @@ export default class GameScene extends Scene {
       if (!collectable.isPick())
         return;
     }
-    Game.events.triggerEvent('scene:restart');
+    Game.sceneManager.activeScene = this.nextScene;
   }
 }
 

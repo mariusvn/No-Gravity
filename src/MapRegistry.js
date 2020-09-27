@@ -6,6 +6,10 @@ import level0Csv from 'assets/maps/level-0/level-0.csv';
 import level0Json from 'assets/maps/level-0/level-0.json';
 import level0BackCsv from 'assets/maps/level-0/level-0-back.csv';
 
+import level2Csv from 'assets/maps/level-2/level-2.csv';
+import level2Json from 'assets/maps/level-2/level-2.json';
+import level2BackCsv from 'assets/maps/level-2/level-2-back.csv';
+
 /**
  * @type {Object.<string, MapEntry>}
  */
@@ -19,6 +23,11 @@ const MapRegistry = {
     tileMap: level1Csv,
     backTileMap: level1BackCsv,
     dynamicObjectsMap: level1Json
+  },
+  level2: {
+    tileMap: level2Csv,
+    backTileMap: level2BackCsv,
+    dynamicObjectsMap: level2Json
   }
 }
 
