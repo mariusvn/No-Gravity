@@ -1,22 +1,34 @@
 import Entity from "root/Player/Entity";
 import Game from "root/main";
-import player from 'assets/player/Player1-old.png';
 import * as Collision from "root/Collision";
+import sawAnimImg from 'assets/tilesets/buzzsaw.png';
+import Animation from "root/Animation";
 
 export default class Mob extends Entity {
   sprite;
   reverse = false;
   speed = 5;
   _canHitPlayer = true;
+  _animation;
 
-  constructor(tilemap, x, y) {
+  constructor(tilemap, x, y, speeeeed = 1.0) {
     super(tilemap);
-    this.sprite = new PIXI.Sprite(Game.app.loader.resources[player].texture);
-    const resizeRatio = (tilemap.tileRenderSize * 2) / (this.sprite.height);
-    this.sprite.scale.set(resizeRatio);
+    this._animation = new Animation(sawAnimImg, {x: 18, y: 18}, {
+      'anim': {
+        animated: true,
+        from: 0,
+        to: 2,
+        loop: true
+      }
+    }, 'anim', 50);
+    this.sprite = this._animation.sprite;
+    this.sprite.height = tilemap.tileRenderSize;
+    this.sprite.width = tilemap.tileRenderSize;
     this.container.y = y * tilemap.tileRenderSize;
     this.container.x = x * tilemap.tileRenderSize;
     this.container.addChild(this.sprite);
+    this._animation.start();
+    this.speed = speeeeed;
     this.setVelocity({x: 8, y: this.getVelocity().y});
   }
 
@@ -31,7 +43,7 @@ export default class Mob extends Entity {
 
   move() {
     const userPos = this.getPosition();
-    const frontPositionX = (this.reverse) ? userPos.x + this.sprite.width : userPos.x;
+    const frontPositionX = (this.reverse) ? userPos.x + this.sprite.width - 1 : userPos.x + 1;
     const footPositionY = userPos.y + this.sprite.height;
     const tilePos = this.tilemap.getTileCoord({x: frontPositionX, y: footPositionY - 1}); /* -1 to avoid between tile confusion */
 
@@ -39,13 +51,10 @@ export default class Mob extends Entity {
       // If tile under the player is air DO NOTHING
       return;
     } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y + 1}) === -1) {
-      // If tile in front and under the player is air
+      // If tile in front and under the saw is air
       this.reverse = !this.reverse;
     } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y}) !== -1) {
-      // If tile in front of knees is filled
-      this.reverse = !this.reverse;
-    } else if (this.tilemap.getTile({x: tilePos.x + ((this.reverse) ? -1 : 1), y: tilePos.y - 1}) !== -1) {
-      // If tile in front of head is filled
+      // If tile in front is filled
       this.reverse = !this.reverse;
     }
 
@@ -61,5 +70,7 @@ export default class Mob extends Entity {
     this.move();
   }
 
-
+  unload() {
+    this._animation.stop();
+  }
 }

@@ -11,6 +11,8 @@ import Collectable from "root/Collectable";
 import UserInterfaceHandler from "root/ui/UserInterfaceHandler";
 import StaticTilemap from "root/StaticTilemap";
 import backTilesetImg from 'assets/tilesets/misc.png';
+import Animation from "root/Animation";
+import flagAnimImg from 'assets/tilesets/flag.png';
 
 export default class GameScene extends Scene {
 
@@ -28,6 +30,8 @@ export default class GameScene extends Scene {
   mobs = [];
   collectables = [];
   nextScene = '';
+  flagSprite;
+  flagAnimation;
 
   /**
    * @param {MapEntry} map
@@ -41,7 +45,6 @@ export default class GameScene extends Scene {
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
     window.player = this.player;
     window.tilemap = this.tilemap;
-    this.cameraHandledContainer.addChild(this.backTileMap.container);
 
     if (map.dynamicObjectsMap && map.dynamicObjectsMap.endTrigger) {
       const triggerPos = this.tilemap.getPixelsFromTileCoord(map.dynamicObjectsMap.endTrigger);
@@ -55,6 +58,24 @@ export default class GameScene extends Scene {
         this.player.container
       );
       this.endTrigger.onCollide = this.onPlayerReachEnd.bind(this);
+      this.flagAnimation = new Animation(flagAnimImg, {x: 26, y: 62}, {
+        'idle': {
+          animated: false,
+          tileId: 0
+        },
+        'reached': {
+          animated: true,
+          from: 1,
+          to: 12,
+          loop: false
+        }
+      }, 'idle', 100);
+      this.flagSprite = this.flagAnimation.sprite;
+      this.flagSprite.height = this.tilemap.tileRenderSize * 2;
+      this.flagSprite.width = this.tilemap.tileRenderSize;
+      this.flagSprite.x = triggerPos.x + map.dynamicObjectsMap.endTrigger.width / 2 - this.flagSprite.width / 2;
+      this.flagSprite.y = triggerPos.y + map.dynamicObjectsMap.endTrigger.height * this.tilemap.tileRenderSize - this.flagSprite.height;
+      this.cameraHandledContainer.addChild(this.flagSprite);
     }
 
     window.endTrigger = this.endTrigger;
@@ -64,10 +85,11 @@ export default class GameScene extends Scene {
       this.cameraHandledContainer.addChild(laser.container);
     }
     for (const ennemy of map.dynamicObjectsMap.ennemies) {
-      const mob = new Mob(this.tilemap, ennemy.x, ennemy.y);
+      const mob = new Mob(this.tilemap, ennemy.x, ennemy.y, ennemy.speed);
       this.mobs.push(mob);
       this.cameraHandledContainer.addChild(mob.container);
     }
+    this.cameraHandledContainer.addChild(this.backTileMap.container);
     for (const collectableData of map.dynamicObjectsMap.collectables) {
       const collectable = new Collectable(
         this.player,
@@ -123,6 +145,8 @@ export default class GameScene extends Scene {
     this.player.startKeyboardListening();
     this.keysHandlers.gravitySwitch = keyboard('e');
     this.keysHandlers.gravitySwitch.press = this.switchGravity.bind(this);
+    if (this.flagAnimation)
+      this.flagAnimation.start();
   }
 
   onSceneEnd() {
@@ -130,6 +154,9 @@ export default class GameScene extends Scene {
     this.player.stopKeyboardListening();
     this.keysHandlers.gravitySwitch.unsubscribe();
     this.lasers.forEach(item => item.onSceneEnd());
+    this.mobs.forEach(item => item.unload());
+    if (this.flagAnimation)
+      this.flagAnimation.stop();
   }
 
   switchGravity() {
@@ -144,7 +171,16 @@ export default class GameScene extends Scene {
       if (!collectable.isPick())
         return;
     }
-    Game.sceneManager.activeScene = this.nextScene;
+    this.flagAnimation.onAnimationFinished = (animName) => {
+      console.log('yayayay');
+      if (animName === 'reached') {
+        this.flagAnimation.stop();
+        setTimeout(() => {
+          Game.sceneManager.activeScene = this.nextScene;
+        }, 700);
+      }
+    }
+    this.flagAnimation.setCurrentAnimation('reached');
   }
 }
 
