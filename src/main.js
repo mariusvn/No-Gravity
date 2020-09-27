@@ -11,6 +11,7 @@ import Level1 from "root/Scenes/level1/level1";
 import HowToPlayScene from "root/Scenes/howToPlay/howToPlayScene";
 import creditScene from "root/Scenes/credits/creditScene";
 import levelsScene from "root/Scenes/levels/levelsScene";
+import Level0 from "root/Scenes/level0/level0";
 
 
 global.PIXI = PIXI;
@@ -46,6 +47,7 @@ export default class Game {
       Game.sceneManager.addScene(creditScene, 'credits');
       Game.sceneManager.addScene(levelsScene, 'levels');
       Game.sceneManager.addScene(Level1, 'level1');
+      Game.sceneManager.addScene(Level0, 'level0');
       Game.sceneManager.activeScene = 'MainMenu';
     });
     window.game = Game;

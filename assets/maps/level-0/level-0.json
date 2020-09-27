@@ -1,0 +1,46 @@
+{
+	"endTrigger": {
+		"x": 5,
+		"y": 2,
+		"width": 2,
+		"height": 3
+	},
+	"start": {
+		"x": 60,
+		"y": 3
+	},
+	"laserHitReg":[
+		{
+			"x": 41,
+			"y": 11,
+			"length": 3,
+			"delay": 1000,
+			"direction": "bottom"
+		},
+		{
+			"x": 15,
+			"y": 4,
+			"length": 7,
+			"delay": -1,
+			"direction": "right"
+		},
+		{
+			"x": 3,
+			"y": 9,
+			"length": 2,
+			"delay": 700,
+			"direction": "bottom"
+		}
+	],
+	"ennemies": [],
+	"collectables": [
+		{
+			"x": 43,
+			"y": 13
+		},
+		{
+			"x": 18,
+			"y": 6
+		}
+	]
+}
