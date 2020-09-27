@@ -52,6 +52,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /.(mp3)$/,
+        use: 'file-loader?name=sounds/[contenthash].[ext]'
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {

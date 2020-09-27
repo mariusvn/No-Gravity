@@ -3,6 +3,8 @@ import player from 'assets/player/Player1.png';
 import Game from "root/main";
 import keyboard from "root/Keyboard";
 import Animation from "root/Animation";
+import audio from  "assets/audio/jam.mp3"
+import sound from "root/sound";
 
 export default class Player extends Entity {
 
@@ -23,6 +25,8 @@ export default class Player extends Entity {
 
   constructor(tilemap, x, y) {
     super(tilemap);
+    let sounds = new sound(audio);
+    sounds.play();
     this.playerAnimation = new Animation(player, {x: 32, y: 56}, {
       'idle': {
         animated: false,
