@@ -183,8 +183,10 @@ export default class GameScene extends Scene {
 
   onPlayerReachEnd() {
     for (const collectable of this.collectables) {
-      if (!collectable.isPick())
+      if (!collectable.isPick()) {
+        Game.events.triggerEvent('gui:missing-coins');
         return;
+      }
     }
     this.flagAnimation.onAnimationFinished = (animName) => {
       if (animName === 'reached') {

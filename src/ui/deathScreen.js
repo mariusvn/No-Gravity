@@ -14,7 +14,7 @@ export default class DeathScreen extends UserInterface {
     "This time, he said.",
     "Not this time !",
     "Why are you running ?",
-    "Waconda forever",
+    "Wakanda forever",
     "Are ya winnin' son ?"
   ];
   textStyle = new PIXI.TextStyle({

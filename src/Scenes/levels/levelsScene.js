@@ -24,6 +24,10 @@ export default class LevelsScene extends Scene {
       name: 'Level 2',
       id: 'level2'
     },
+    {
+      name: 'Level 3',
+      id: 'level3'
+    },
   ];
 
   constructor() {
