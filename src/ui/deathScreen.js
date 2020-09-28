@@ -43,11 +43,11 @@ export default class DeathScreen extends UserInterface {
     this.container.y = this.screenSize.y / 2 - this.background.height / 2;
     this.container.addChild(this.background);
     this.container.addChild(this.text);
-    Game.events.addEventHandler('gameplay:death', this.startAnim.bind(this));
+    this.startAnim = this.startAnim.bind(this);
+    Game.events.addEventHandler('gameplay:death', this.startAnim);
   }
 
   startAnim() {
-    console.log("playAnim");
     this.audio.play();
     const random = Math.floor(Math.random() * this.availableTexts.length);
     this.text.text = this.availableTexts[random];
@@ -86,8 +86,7 @@ export default class DeathScreen extends UserInterface {
 
   unload() {
     super.unload();
-    console.log("unload");
-    Game.events.removeEventHandler('gameplay:death', this.startAnim.bind(this));
+    Game.events.removeEventHandler('gameplay:death', this.startAnim);
   }
 
 }

@@ -52,7 +52,6 @@ export default class Game {
       Game.sceneManager.addScene(Level2, 'level2');
       Game.sceneManager.activeScene = 'MainMenu';
     });
-    window.game = Game;
   }
 
   update(delta) {

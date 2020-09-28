@@ -56,6 +56,7 @@ export default class Player extends Entity {
     this.container.x = x * this.tilemap.tileRenderSize;
     this.container.y = y * this.tilemap.tileRenderSize;
     this.container.addChild(this.playerSprite);
+    this.onGravityChanges = this.onGravityChanges.bind(this);
   }
 
   startKeyboardListening() {
@@ -68,7 +69,7 @@ export default class Player extends Entity {
     this.keysHandlers.bottom.press = this.startSneack.bind(this);
     this.keysHandlers.bottom.release = this.stopSneack.bind(this);
     this.playerAnimation.start();
-    Game.events.addEventHandler('gameplay:gravity-switch', this.onGravityChanges.bind(this));
+    Game.events.addEventHandler('gameplay:gravity-switch', this.onGravityChanges);
   }
 
   stopKeyboardListening() {
@@ -77,7 +78,7 @@ export default class Player extends Entity {
     this.keysHandlers.leftQwerty.unsubscribe();
     this.keysHandlers.left.unsubscribe();
     this.keysHandlers.right.unsubscribe();
-    Game.events.removeEventHandler('gameplay:gravity-switch', this.onGravityChanges.bind(this));
+    Game.events.removeEventHandler('gameplay:gravity-switch', this.onGravityChanges);
     this.playerAnimation.stop();
   }
 

@@ -35,7 +35,6 @@ export default class Collectable{
     this._pick = true;
     this.takeCoin.onCollide = undefined;
     this.container.removeChild(this.sprite);
-    console.log("pickup");
   }
 
   isPick(){return this._pick}

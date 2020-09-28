@@ -57,8 +57,6 @@ export default class GameScene extends Scene {
     this.tilemap = new Tilemap(map, Game.app.screen.height);
     this.backTileMap = new StaticTilemap(map.backTileMap, Game.app.screen.height, backTilesetImg);
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
-    window.player = this.player;
-    window.tilemap = this.tilemap;
     if(GameScene.firstLoad){
       audio = new sound(music, true, false, false);
       GameScene.firstLoad = false;
@@ -97,7 +95,6 @@ export default class GameScene extends Scene {
       this.cameraHandledContainer.addChild(this.flagSprite);
     }
 
-    window.endTrigger = this.endTrigger;
     for (const ennemy of map.dynamicObjectsMap.ennemies) {
       const mob = new Mob(this.tilemap, ennemy.x, ennemy.y, ennemy.speed);
       this.mobs.push(mob);
@@ -180,7 +177,6 @@ export default class GameScene extends Scene {
   }
 
   switchGravity() {
-    console.log('Gravity switch');
     Game.gameplayState.isGravityEnabled = !Game.gameplayState.isGravityEnabled;
     Game.events.triggerEvent('gameplay:gravity-switch', Game.gameplayState.isGravityEnabled);
   }
