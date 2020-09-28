@@ -79,4 +79,9 @@ export default class DeathScreen extends UserInterface {
     }
   }
 
+  unload() {
+    super.unload();
+    Game.events.removeEventHandler('gameplay:death', this.startAnim.bind(this));
+  }
+
 }

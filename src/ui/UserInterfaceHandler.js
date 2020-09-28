@@ -26,4 +26,10 @@ export default class UserInterfaceHandler {
   assignToContainer(container) {
     container.addChild(this.container);
   }
+
+  unload() {
+    for (let ui of this.uis) {
+      ui.unload();
+    }
+  }
 }

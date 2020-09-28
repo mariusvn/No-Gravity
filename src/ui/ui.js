@@ -7,4 +7,6 @@ export default class UserInterface {
   constructor() {}
 
   update(delta) {}
+
+  unload() {}
 }

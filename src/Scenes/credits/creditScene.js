@@ -3,17 +3,18 @@ import Game from "root/main";
 import Button from "root/ui/Button";
 
 export default class CreditScene extends Scene {
-  _textContent = `NO GRAVITY
+  _textContent = `NO GRAVITY - To the space
   
   Code:
   Marius "Astroboy" Van Nieuwenhuyse
   Jason "Vakeros" Defer
   
-  Art:
+  Assets:
   Jesse "Jwoodif" Jamison Menser
   
   Created using PIXI.js library
-  All assets created by Jwoodif`;
+  All assets created by Jwoodif
+  All sound effects and Music created by Astroboy`;
 
   _textStyle = new PIXI.TextStyle({
     fontFamily: 'Londrina Solid',

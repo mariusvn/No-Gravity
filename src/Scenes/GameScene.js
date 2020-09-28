@@ -13,6 +13,7 @@ import StaticTilemap from "root/StaticTilemap";
 import backTilesetImg from 'assets/tilesets/misc.png';
 import Animation from "root/Animation";
 import flagAnimImg from 'assets/tilesets/flag.png';
+import earthBg from 'assets/tilesets/bg-earth.png';
 
 export default class GameScene extends Scene {
 
@@ -32,6 +33,7 @@ export default class GameScene extends Scene {
   nextScene = '';
   flagSprite;
   flagAnimation;
+  bgSprite;
 
   /**
    * @param {MapEntry} map
@@ -40,6 +42,13 @@ export default class GameScene extends Scene {
   constructor(map, nextScene = 'MainMenu') {
     super();
     this.nextScene = nextScene;
+
+    /* Background */
+    this.bgSprite = new PIXI.Sprite(Game.app.loader.resources[earthBg].texture);
+    this.bgSprite.height = Game.app.screen.height;
+    this.bgSprite.width = Game.app.screen.width;
+    this.sceneContainer.addChild(this.bgSprite);
+
     this.tilemap = new Tilemap(map, Game.app.screen.height);
     this.backTileMap = new StaticTilemap(map.backTileMap, Game.app.screen.height, backTilesetImg);
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
@@ -79,17 +88,17 @@ export default class GameScene extends Scene {
     }
 
     window.endTrigger = this.endTrigger;
-    for (const laserData of map.dynamicObjectsMap.laserHitReg) {
-      const laser = new Laser(this.player, this.tilemap, laserData)
-      this.lasers.push(laser);
-      this.cameraHandledContainer.addChild(laser.container);
-    }
     for (const ennemy of map.dynamicObjectsMap.ennemies) {
       const mob = new Mob(this.tilemap, ennemy.x, ennemy.y, ennemy.speed);
       this.mobs.push(mob);
       this.cameraHandledContainer.addChild(mob.container);
     }
     this.cameraHandledContainer.addChild(this.backTileMap.container);
+    for (const laserData of map.dynamicObjectsMap.laserHitReg) {
+      const laser = new Laser(this.player, this.tilemap, laserData)
+      this.lasers.push(laser);
+      this.cameraHandledContainer.addChild(laser.container);
+    }
     for (const collectableData of map.dynamicObjectsMap.collectables) {
       const collectable = new Collectable(
         this.player,
@@ -117,7 +126,6 @@ export default class GameScene extends Scene {
     this.updateLasers();
     this.updateMobs(delta);
     this.updateCollectable();
-    this.userInterface.update(delta);
     this.endTrigger.update();
   }
 
@@ -157,6 +165,7 @@ export default class GameScene extends Scene {
     this.mobs.forEach(item => item.unload());
     if (this.flagAnimation)
       this.flagAnimation.stop();
+    this.userInterface.unload();
   }
 
   switchGravity() {
@@ -166,13 +175,11 @@ export default class GameScene extends Scene {
   }
 
   onPlayerReachEnd() {
-    console.info('Player reached end');
     for (const collectable of this.collectables) {
       if (!collectable.isPick())
         return;
     }
     this.flagAnimation.onAnimationFinished = (animName) => {
-      console.log('yayayay');
       if (animName === 'reached') {
         this.flagAnimation.stop();
         setTimeout(() => {
