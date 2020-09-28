@@ -167,9 +167,16 @@ export default class GameScene extends Scene {
     super.onSceneStart();
     this.player.startKeyboardListening();
     this.keysHandlers.gravitySwitch = keyboard('e');
+    this.onPlayerDeath = this.onPlayerDeath.bind(this);
+    Game.events.addEventHandler('gameplay:death', this.onPlayerDeath);
     this.keysHandlers.gravitySwitch.press = this.switchGravity.bind(this);
     if (this.flagAnimation)
       this.flagAnimation.start();
+  }
+
+  onPlayerDeath() {
+    this.keysHandlers.gravitySwitch.unsubscribe();
+    Game.events.removeEventHandler('gameplay:death', this.onPlayerDeath);
   }
 
   onSceneEnd() {
