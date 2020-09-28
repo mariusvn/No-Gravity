@@ -179,6 +179,11 @@ export default class GameScene extends Scene {
   switchGravity() {
     Game.gameplayState.isGravityEnabled = !Game.gameplayState.isGravityEnabled;
     Game.events.triggerEvent('gameplay:gravity-switch', Game.gameplayState.isGravityEnabled);
+    if (Game.gameplayState.isGravityEnabled) {
+      this.bgSprite.alpha = 1
+    } else {
+      this.bgSprite.alpha = 0;
+    }
   }
 
   onPlayerReachEnd() {

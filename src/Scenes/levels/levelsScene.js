@@ -1,6 +1,7 @@
 import Scene from "root/Scenes/Scene";
 import Game from "root/main";
 import Button from "root/ui/Button";
+import earthBg2 from "assets/tilesets/bg-earth-2.png";
 
 export default class LevelsScene extends Scene {
   _title = new PIXI.Text('LEVELS', {
@@ -32,6 +33,12 @@ export default class LevelsScene extends Scene {
 
   constructor() {
     super();
+    const bgSprite = new PIXI.Sprite(Game.app.loader.resources[earthBg2].texture);
+    bgSprite.width = Game.app.renderer.width;
+    bgSprite.height = Game.app.renderer.height;
+    bgSprite.x = 0;
+    bgSprite.y = 0;
+    this.sceneContainer.addChild(bgSprite);
     const titleMetrics = PIXI.TextMetrics.measureText(this._title.text, this._title.style);
     this._title.x = Game.app.screen.width / 2 - titleMetrics.width / 2;
     this._title.y = 100;

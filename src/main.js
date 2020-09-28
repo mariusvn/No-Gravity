@@ -30,7 +30,7 @@ export default class Game {
   }
 
   constructor() {
-    Game.app = new PIXI.Application({antialias: true, autoDensity: true, height: window.innerHeight, width: window.innerWidth, backgroundColor: 0x45473E});
+    Game.app = new PIXI.Application({antialias: true, autoDensity: true, height: window.innerHeight, width: window.innerWidth, backgroundColor: 0});
     document.body.appendChild(Game.app.view);
     if (Game.app.renderer.height > 500)
       PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
