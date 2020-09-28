@@ -14,6 +14,7 @@ import levelsScene from "root/Scenes/levels/levelsScene";
 import Level0 from "root/Scenes/level0/level0";
 import Level3 from "root/Scenes/level3/level3";
 import Level1 from "root/Scenes/level1/level1";
+import Level4 from "root/Scenes/level4/level4";
 
 
 global.PIXI = PIXI;
@@ -52,6 +53,7 @@ export default class Game {
       Game.sceneManager.addScene(Level1, 'level1');
       Game.sceneManager.addScene(Level2, 'level2');
       Game.sceneManager.addScene(Level3, 'level3');
+      Game.sceneManager.addScene(Level4, 'level4');
       Game.sceneManager.activeScene = 'MainMenu';
     });
   }

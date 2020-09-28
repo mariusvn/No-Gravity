@@ -1,0 +1,81 @@
+{
+  "endTrigger": {
+    "x": 48,
+    "y": 11,
+    "width": 5,
+    "height": 4
+  },
+  "start": {
+    "x": 4,
+    "y": 9
+  },
+  "laserHitReg":[
+    {
+      "x": 2,
+      "y": 7,
+      "length": 11,
+      "delay": 800,
+      "direction": "right"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "length": 5,
+      "delay": 700,
+      "direction": "bottom"
+    },
+    {
+      "x": 18,
+      "y": 12,
+      "length": 4,
+      "delay": -1,
+      "direction": "right"
+    },
+    {
+      "x": 22,
+      "y": 2,
+      "length": 4,
+      "delay": 1000,
+      "direction": "bottom"
+    },
+
+    {
+      "x": 27,
+      "y": 1,
+      "length": 6,
+      "delay": 1200,
+      "direction": "bottom"
+    }
+  ],
+  "ennemies": [
+    {
+      "x": 8,
+      "y": 11,
+      "speed": 3
+    },
+    {
+      "x": 26,
+      "y": 12,
+      "speed": 3
+    },
+    {
+      "x": 36,
+      "y": 12,
+      "speed": 1
+    }
+  ],
+  "collectables": [
+    {
+      "x": 19,
+      "y": 3
+    },
+    {
+      "x": 33,
+      "y": 10
+    },
+    {
+      "x": 14,
+      "y": 6
+    }
+  ]
+}

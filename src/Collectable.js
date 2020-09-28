@@ -9,6 +9,7 @@ export default class Collectable{
   count = {total: 0, pick: 0,}
   sprite
   _pick = false;
+  _flip = false;
   audio;
   constructor(player, x, y, tileRenderSize) {
     this.sprite =  new PIXI.Sprite(Game.app.loader.resources[tilecoin].texture);
@@ -27,8 +28,10 @@ export default class Collectable{
       ),
       player.container
     );
+
     this.takeCoin.onCollide = this.pickup.bind(this);
   }
+
 
   pickup(){
     this.audio.play();
