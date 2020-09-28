@@ -16,6 +16,7 @@ import flagAnimImg from 'assets/tilesets/flag.png';
 import sound from "root/sound";
 import music from "assets/audio/jam.mp3";
 import earthBg from 'assets/tilesets/bg-earth.png';
+import moonBg from 'assets/tilesets/bg-space.png';
 
 let audio = new sound(music, true, false, false);
 export default class GameScene extends Scene {
@@ -37,6 +38,7 @@ export default class GameScene extends Scene {
   flagSprite;
   flagAnimation;
   bgSprite;
+  bgSpaceSprite;
 
   static audio;
   static firstLoad = true;
@@ -53,6 +55,12 @@ export default class GameScene extends Scene {
     this.bgSprite.height = Game.app.screen.height;
     this.bgSprite.width = Game.app.screen.width;
     this.sceneContainer.addChild(this.bgSprite);
+    this.bgSpaceSprite = new PIXI.Sprite(Game.app.loader.resources[moonBg].texture);
+    this.bgSpaceSprite.height = Game.app.screen.height;
+    this.bgSpaceSprite.width = Game.app.screen.width * 1.8;
+    this.bgSpaceSprite.x = -Game.app.screen.width * 1.8 / 3
+    this.bgSpaceSprite.alpha = 0;
+    this.sceneContainer.addChild(this.bgSpaceSprite);
 
     this.tilemap = new Tilemap(map, Game.app.screen.height);
     this.backTileMap = new StaticTilemap(map.backTileMap, Game.app.screen.height, backTilesetImg);
@@ -181,8 +189,10 @@ export default class GameScene extends Scene {
     Game.events.triggerEvent('gameplay:gravity-switch', Game.gameplayState.isGravityEnabled);
     if (Game.gameplayState.isGravityEnabled) {
       this.bgSprite.alpha = 1
+      this.bgSpaceSprite.alpha = 0;
     } else {
       this.bgSprite.alpha = 0;
+      this.bgSpaceSprite.alpha = 1;
     }
   }
 
