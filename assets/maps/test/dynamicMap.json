@@ -1,0 +1,24 @@
+{
+	"endTrigger": {
+		"x": 108,
+		"y": 5,
+		"width": 1,
+		"height": 1
+	},
+	"laserHitReg":[
+		{
+			"x": 1000,
+			"y": 620,
+			"lenght": 3,
+			"delay": 1000,
+			"direction": "right"
+		},
+		{
+			"x": 1500,
+			"y": 620,
+			"lenght": 1,
+			"delay": 1000,
+			"direction": "top"
+		}
+	]
+}

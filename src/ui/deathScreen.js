@@ -1,6 +1,8 @@
 import UserInterface from "root/ui/ui";
 import keyboard from "root/Keyboard";
 import Game from "root/main";
+import Sound from "root/sound"
+import DeathSound from "assets/audio/death.mp3"
 
 export default class DeathScreen extends UserInterface {
 
@@ -26,6 +28,7 @@ export default class DeathScreen extends UserInterface {
 
   constructor() {
     super();
+    this.audio = new Sound(DeathSound, false, true, false, 0.1);
     this.background.beginFill(0x3E83C1);
     this.background.drawPolygon([
       new PIXI.Point(0,0),
@@ -44,6 +47,8 @@ export default class DeathScreen extends UserInterface {
   }
 
   startAnim() {
+    console.log("playAnim");
+    this.audio.play();
     const random = Math.floor(Math.random() * this.availableTexts.length);
     this.text.text = this.availableTexts[random];
     this.textDims = PIXI.TextMetrics.measureText(this.text.text, this.textStyle);
@@ -81,6 +86,7 @@ export default class DeathScreen extends UserInterface {
 
   unload() {
     super.unload();
+    console.log("unload");
     Game.events.removeEventHandler('gameplay:death', this.startAnim.bind(this));
   }
 

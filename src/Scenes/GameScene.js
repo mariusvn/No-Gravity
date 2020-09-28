@@ -13,8 +13,11 @@ import StaticTilemap from "root/StaticTilemap";
 import backTilesetImg from 'assets/tilesets/misc.png';
 import Animation from "root/Animation";
 import flagAnimImg from 'assets/tilesets/flag.png';
+import sound from "root/sound";
+import music from "assets/audio/jam.mp3";
 import earthBg from 'assets/tilesets/bg-earth.png';
 
+let audio = new sound(music, true, false, false);
 export default class GameScene extends Scene {
 
   player;
@@ -35,6 +38,8 @@ export default class GameScene extends Scene {
   flagAnimation;
   bgSprite;
 
+  static audio;
+  static firstLoad = true;
   /**
    * @param {MapEntry} map
    * @param {string} nextScene
@@ -54,6 +59,11 @@ export default class GameScene extends Scene {
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
     window.player = this.player;
     window.tilemap = this.tilemap;
+    if(GameScene.firstLoad){
+      audio = new sound(music, true, false, false);
+      GameScene.firstLoad = false;
+    }
+    audio.play();
 
     if (map.dynamicObjectsMap && map.dynamicObjectsMap.endTrigger) {
       const triggerPos = this.tilemap.getPixelsFromTileCoord(map.dynamicObjectsMap.endTrigger);
@@ -159,6 +169,7 @@ export default class GameScene extends Scene {
 
   onSceneEnd() {
     super.onSceneEnd();
+    audio.pause();
     this.player.stopKeyboardListening();
     this.keysHandlers.gravitySwitch.unsubscribe();
     this.lasers.forEach(item => item.onSceneEnd());

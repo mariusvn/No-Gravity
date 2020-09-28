@@ -2,6 +2,7 @@ import Scene from "root/Scenes/Scene";
 import Button from "root/ui/Button";
 import Game from "root/main";
 import logoImg from 'assets/tilesets/logo.png';
+import gameScene from 'root/Scenes/GameScene'
 
 export default class MainMenu extends Scene {
 
@@ -11,8 +12,11 @@ export default class MainMenu extends Scene {
   howToPlay;
   logoSprite;
 
+
   constructor() {
     super();
+
+
     this.logoSprite = new PIXI.Sprite(Game.app.loader.resources[logoImg].texture);
     this.logoSprite.width = this.logoSprite.width * 2;
     this.logoSprite.height = this.logoSprite.height * 2;
