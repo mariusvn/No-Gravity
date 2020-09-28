@@ -10,6 +10,9 @@ import miscTileset from 'assets/tilesets/misc.png';
 import logo from 'assets/tilesets/logo.png';
 import sawAnimImg from 'assets/tilesets/buzzsaw.png';
 import flagAnim from 'assets/tilesets/flag.png';
+import earthBg from 'assets/tilesets/bg-earth.png';
+import earthBg2 from 'assets/tilesets/bg-earth-2.png';
+import spaceBg from 'assets/tilesets/bg-space.png';
 
 const assetsToLoad = [
   moonTileset,
@@ -23,7 +26,10 @@ const assetsToLoad = [
   miscTileset,
   logo,
   sawAnimImg,
-  flagAnim
+  flagAnim,
+  earthBg,
+  earthBg2,
+  spaceBg
 ]
 
 export default function loader(pixiLoader, cb) {

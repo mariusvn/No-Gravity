@@ -32,7 +32,6 @@ export default class Animation {
     this._currentAnim = defaultAnim;
     this._animData = animationData;
     this._delay = delay;
-    window.anim = this;
 
     /* Setting up default frame */
     this._frameRect.width = frameSize.x;

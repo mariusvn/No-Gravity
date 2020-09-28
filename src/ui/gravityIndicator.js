@@ -34,6 +34,8 @@ export default class GravityIndicator extends UserInterface {
     this.container.addChild(this.gravityValueText);
     this.container.addChild(this.gravityText);
     Game.events.addEventHandler('gameplay:gravity-switch', this.onGravitySwitches.bind(this));
+    this.onPlayerDeath = this.onPlayerDeath.bind(this);
+    Game.events.addEventHandler('gameplay:death', this.onPlayerDeath);
   }
 
   onGravitySwitches(isOn) {
@@ -44,5 +46,14 @@ export default class GravityIndicator extends UserInterface {
       this.gravityValueText.text = 'OFF';
       this.gravityValueText.style.fill = '#f00';
     }
+  }
+
+  onPlayerDeath() {
+    this.container.alpha = 0;
+  }
+
+  unload() {
+    super.unload();
+    Game.events.removeEventHandler('gameplay:death', this.onPlayerDeath);
   }
 }

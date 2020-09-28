@@ -7,12 +7,14 @@ import Tileset from "root/Tileset";
 import earthTileset from "assets/tilesets/earth.png";
 import moonTileset from "assets/tilesets/moon.png";
 import Tilemap from "root/Tilemap";
-import Level1 from "root/Scenes/level1/level1";
+import Level2 from "root/Scenes/level2/level2";
 import HowToPlayScene from "root/Scenes/howToPlay/howToPlayScene";
 import creditScene from "root/Scenes/credits/creditScene";
 import levelsScene from "root/Scenes/levels/levelsScene";
 import Level0 from "root/Scenes/level0/level0";
-import Level2 from "root/Scenes/level2/level2";
+import Level3 from "root/Scenes/level3/level3";
+import Level1 from "root/Scenes/level1/level1";
+import Level4 from "root/Scenes/level4/level4";
 
 
 global.PIXI = PIXI;
@@ -29,7 +31,7 @@ export default class Game {
   }
 
   constructor() {
-    Game.app = new PIXI.Application({antialias: true, autoDensity: true, height: window.innerHeight, width: window.innerWidth, backgroundColor: 0x45473E});
+    Game.app = new PIXI.Application({antialias: true, autoDensity: true, height: window.innerHeight, width: window.innerWidth, backgroundColor: 0});
     document.body.appendChild(Game.app.view);
     if (Game.app.renderer.height > 500)
       PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -47,12 +49,13 @@ export default class Game {
       Game.sceneManager.addScene(HowToPlayScene, 'HowToPlay');
       Game.sceneManager.addScene(creditScene, 'credits');
       Game.sceneManager.addScene(levelsScene, 'levels');
-      Game.sceneManager.addScene(Level1, 'level1');
       Game.sceneManager.addScene(Level0, 'level0');
+      Game.sceneManager.addScene(Level1, 'level1');
       Game.sceneManager.addScene(Level2, 'level2');
+      Game.sceneManager.addScene(Level3, 'level3');
+      Game.sceneManager.addScene(Level4, 'level4');
       Game.sceneManager.activeScene = 'MainMenu';
     });
-    window.game = Game;
   }
 
   update(delta) {

@@ -2,6 +2,7 @@ import Scene from "root/Scenes/Scene";
 import Game from "root/main";
 import keyboardLayout from 'assets/tilesets/keyboard-layout.png';
 import Button from "root/ui/Button";
+import earthBg2 from "assets/tilesets/bg-earth-2.png";
 
 export default class HowToPlayScene extends Scene {
 
@@ -42,6 +43,14 @@ export default class HowToPlayScene extends Scene {
 
   constructor() {
     super();
+
+    const bgSprite = new PIXI.Sprite(Game.app.loader.resources[earthBg2].texture);
+    bgSprite.width = Game.app.renderer.width;
+    bgSprite.height = Game.app.renderer.height;
+    bgSprite.x = 0;
+    bgSprite.y = 0;
+    this.sceneContainer.addChild(bgSprite);
+
     this._text.x = Game.app.renderer.width / 2 - this._textMetrics.width / 2;
     this._text.y = Game.app.renderer.height / 2 - this._textMetrics.height / 2 - 100;
     this._keyboardSprite.x = Game.app.renderer.width / 2 - this._keyboardSprite.width / 2;

@@ -1,6 +1,7 @@
 import GravityIndicator from "root/ui/gravityIndicator";
 import DeathScreen from "root/ui/deathScreen";
 import Navigation from "root/ui/navigation";
+import MissingCoins from "root/ui/missingCoins";
 
 export default class UserInterfaceHandler {
   container = new PIXI.Container();
@@ -8,7 +9,8 @@ export default class UserInterfaceHandler {
   uis = [
     new GravityIndicator(),
     new DeathScreen(),
-    new Navigation()
+    new Navigation(),
+    new MissingCoins()
   ]
 
   constructor() {
@@ -25,5 +27,11 @@ export default class UserInterfaceHandler {
 
   assignToContainer(container) {
     container.addChild(this.container);
+  }
+
+  unload() {
+    for (let ui of this.uis) {
+      ui.unload();
+    }
   }
 }

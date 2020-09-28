@@ -1,0 +1,131 @@
+{
+	"endTrigger": {
+		"x": 61,
+		"y": 8,
+		"width": 2,
+		"height": 3
+	},
+	"start": {
+		"x": 5,
+		"y": 10
+	},
+	"laserHitReg":[
+		{
+			"x": 3,
+			"y": 11,
+			"length": 4,
+			"delay": -1,
+			"direction": "top"
+		},
+		{
+			"x": 10,
+			"y": 12,
+			"length": 5,
+			"delay": -1,
+			"direction": "left"
+		},
+		{
+			"x": 3,
+			"y": 1,
+			"length": 5,
+			"delay": -1,
+			"direction": "bottom"
+		},
+		{
+			"x": 13,
+			"y": 7,
+			"length": 7,
+			"delay": 1100,
+			"direction": "right"
+		},
+		{
+			"x": 13,
+			"y": 8,
+			"length": 7,
+			"delay": 1200,
+			"direction": "right"
+		},
+		{
+			"x": 14,
+			"y": 9,
+			"length": 5,
+			"delay": 1300,
+			"direction": "right"
+		},
+		{
+			"x": 14,
+			"y": 10,
+			"length": 5,
+			"delay": 1400,
+			"direction": "right"
+		},
+		{
+			"x": 15,
+			"y": 12,
+			"length": 3,
+			"delay": 500,
+			"direction": "right"
+		},
+		{
+			"x": 27,
+			"y": 10,
+			"length": 4,
+			"delay": 1000,
+			"direction": "right"
+		},
+		{
+			"x": 25,
+			"y": 14,
+			"length": 2,
+			"delay": 1200,
+			"direction": "bottom"
+		},
+		{
+			"x": 42,
+			"y": 9,
+			"length": 9,
+			"delay": -1,
+			"direction": "left"
+		},
+		{
+			"x": 42,
+			"y": 5,
+			"length": 9,
+			"delay": -1,
+			"direction": "left"
+		},
+		{
+			"x": 49,
+			"y": 7,
+			"length": 6,
+			"delay": -1,
+			"direction": "right"
+		},
+		{
+			"x": 48,
+			"y": 11,
+			"length": 7,
+			"delay": -1,
+			"direction": "right"
+		}
+	],
+	"ennemies": [],
+	"collectables": [
+		{
+			"x": 4,
+			"y": 5
+		},
+		{
+			"x": 11,
+			"y": 2
+		},
+		{
+			"x": 23,
+			"y": 11
+		},
+		{
+			"x": 38,
+			"y": 7
+		}
+	]
+}

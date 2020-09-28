@@ -1,6 +1,8 @@
 import UserInterface from "root/ui/ui";
 import keyboard from "root/Keyboard";
 import Game from "root/main";
+import Sound from "root/sound"
+import DeathSound from "assets/audio/death.mp3"
 
 export default class DeathScreen extends UserInterface {
 
@@ -12,7 +14,7 @@ export default class DeathScreen extends UserInterface {
     "This time, he said.",
     "Not this time !",
     "Why are you running ?",
-    "Waconda forever",
+    "Wakanda forever",
     "Are ya winnin' son ?"
   ];
   textStyle = new PIXI.TextStyle({
@@ -26,6 +28,7 @@ export default class DeathScreen extends UserInterface {
 
   constructor() {
     super();
+    this.audio = new Sound(DeathSound, false, true, false, 0.1);
     this.background.beginFill(0x3E83C1);
     this.background.drawPolygon([
       new PIXI.Point(0,0),
@@ -40,10 +43,12 @@ export default class DeathScreen extends UserInterface {
     this.container.y = this.screenSize.y / 2 - this.background.height / 2;
     this.container.addChild(this.background);
     this.container.addChild(this.text);
-    Game.events.addEventHandler('gameplay:death', this.startAnim.bind(this));
+    this.startAnim = this.startAnim.bind(this);
+    Game.events.addEventHandler('gameplay:death', this.startAnim);
   }
 
   startAnim() {
+    this.audio.play();
     const random = Math.floor(Math.random() * this.availableTexts.length);
     this.text.text = this.availableTexts[random];
     this.textDims = PIXI.TextMetrics.measureText(this.text.text, this.textStyle);
@@ -77,6 +82,11 @@ export default class DeathScreen extends UserInterface {
         Game.events.triggerEvent('scene:restart');
       }
     }
+  }
+
+  unload() {
+    super.unload();
+    Game.events.removeEventHandler('gameplay:death', this.startAnim);
   }
 
 }

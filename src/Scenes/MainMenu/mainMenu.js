@@ -2,6 +2,7 @@ import Scene from "root/Scenes/Scene";
 import Button from "root/ui/Button";
 import Game from "root/main";
 import logoImg from 'assets/tilesets/logo.png';
+import earthBg2 from 'assets/tilesets/bg-earth-2.png'
 
 export default class MainMenu extends Scene {
 
@@ -10,9 +11,20 @@ export default class MainMenu extends Scene {
   creditsButton;
   howToPlay;
   logoSprite;
+  bgSprite;
+
 
   constructor() {
     super();
+
+    this.bgSprite = new PIXI.Sprite(Game.app.loader.resources[earthBg2].texture);
+    this.bgSprite.width = Game.app.renderer.width;
+    this.bgSprite.height = Game.app.renderer.height;
+    this.bgSprite.x = 0;
+    this.bgSprite.y = 0;
+    this.sceneContainer.addChild(this.bgSprite);
+
+
     this.logoSprite = new PIXI.Sprite(Game.app.loader.resources[logoImg].texture);
     this.logoSprite.width = this.logoSprite.width * 2;
     this.logoSprite.height = this.logoSprite.height * 2;

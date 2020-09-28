@@ -3,6 +3,9 @@ import player from 'assets/player/Player1.png';
 import Game from "root/main";
 import keyboard from "root/Keyboard";
 import Animation from "root/Animation";
+import audio1 from  "assets/audio/jump1.mp3"
+import audio2 from  "assets/audio/jump2.mp3"
+import sound from "root/sound";
 
 export default class Player extends Entity {
 
@@ -20,9 +23,12 @@ export default class Player extends Entity {
   remainingJumps = 2;
   maxSpeed = 8;
   resizeRatio = 0;
+  jumpSounds = [];
 
   constructor(tilemap, x, y) {
     super(tilemap);
+    this.jumpSounds[0] = new sound(audio1 , false, true, false, 0.05);
+    this.jumpSounds[1] = new sound(audio2 , false, true, false, 0.05);
     this.playerAnimation = new Animation(player, {x: 32, y: 56}, {
       'idle': {
         animated: false,
@@ -50,6 +56,7 @@ export default class Player extends Entity {
     this.container.x = x * this.tilemap.tileRenderSize;
     this.container.y = y * this.tilemap.tileRenderSize;
     this.container.addChild(this.playerSprite);
+    this.onGravityChanges = this.onGravityChanges.bind(this);
   }
 
   startKeyboardListening() {
@@ -62,7 +69,7 @@ export default class Player extends Entity {
     this.keysHandlers.bottom.press = this.startSneack.bind(this);
     this.keysHandlers.bottom.release = this.stopSneack.bind(this);
     this.playerAnimation.start();
-    Game.events.addEventHandler('gameplay:gravity-switch', this.onGravityChanges.bind(this));
+    Game.events.addEventHandler('gameplay:gravity-switch', this.onGravityChanges);
   }
 
   stopKeyboardListening() {
@@ -71,12 +78,17 @@ export default class Player extends Entity {
     this.keysHandlers.leftQwerty.unsubscribe();
     this.keysHandlers.left.unsubscribe();
     this.keysHandlers.right.unsubscribe();
-    Game.events.removeEventHandler('gameplay:gravity-switch', this.onGravityChanges.bind(this));
+    Game.events.removeEventHandler('gameplay:gravity-switch', this.onGravityChanges);
     this.playerAnimation.stop();
   }
 
   jump() {
     if (Game.gameplayState.isGravityEnabled) {
+      if (this.remainingJumps == 2)
+        this.jumpSounds[0].play();
+      else if(this.remainingJumps == 1)
+        this.jumpSounds[1].play();
+
       if (this.remainingJumps <= 0)
         return;
       this.remainingJumps--;

@@ -13,7 +13,12 @@ import StaticTilemap from "root/StaticTilemap";
 import backTilesetImg from 'assets/tilesets/misc.png';
 import Animation from "root/Animation";
 import flagAnimImg from 'assets/tilesets/flag.png';
+import sound from "root/sound";
+import music from "assets/audio/jam.mp3";
+import earthBg from 'assets/tilesets/bg-earth.png';
+import moonBg from 'assets/tilesets/bg-space.png';
 
+let audio = new sound(music, true, false, false);
 export default class GameScene extends Scene {
 
   player;
@@ -32,7 +37,11 @@ export default class GameScene extends Scene {
   nextScene = '';
   flagSprite;
   flagAnimation;
+  bgSprite;
+  bgSpaceSprite;
 
+  static audio;
+  static firstLoad = true;
   /**
    * @param {MapEntry} map
    * @param {string} nextScene
@@ -40,11 +49,27 @@ export default class GameScene extends Scene {
   constructor(map, nextScene = 'MainMenu') {
     super();
     this.nextScene = nextScene;
+
+    /* Background */
+    this.bgSprite = new PIXI.Sprite(Game.app.loader.resources[earthBg].texture);
+    this.bgSprite.height = Game.app.screen.height;
+    this.bgSprite.width = Game.app.screen.width;
+    this.sceneContainer.addChild(this.bgSprite);
+    this.bgSpaceSprite = new PIXI.Sprite(Game.app.loader.resources[moonBg].texture);
+    this.bgSpaceSprite.height = Game.app.screen.height;
+    this.bgSpaceSprite.width = Game.app.screen.width * 1.8;
+    this.bgSpaceSprite.x = -Game.app.screen.width * 1.8 / 3
+    this.bgSpaceSprite.alpha = 0;
+    this.sceneContainer.addChild(this.bgSpaceSprite);
+
     this.tilemap = new Tilemap(map, Game.app.screen.height);
     this.backTileMap = new StaticTilemap(map.backTileMap, Game.app.screen.height, backTilesetImg);
     this.player = new Player(this.tilemap, map.dynamicObjectsMap.start.x, map.dynamicObjectsMap.start.y);
-    window.player = this.player;
-    window.tilemap = this.tilemap;
+    if(GameScene.firstLoad){
+      audio = new sound(music, true, false, false);
+      GameScene.firstLoad = false;
+    }
+    audio.play();
 
     if (map.dynamicObjectsMap && map.dynamicObjectsMap.endTrigger) {
       const triggerPos = this.tilemap.getPixelsFromTileCoord(map.dynamicObjectsMap.endTrigger);
@@ -78,18 +103,17 @@ export default class GameScene extends Scene {
       this.cameraHandledContainer.addChild(this.flagSprite);
     }
 
-    window.endTrigger = this.endTrigger;
-    for (const laserData of map.dynamicObjectsMap.laserHitReg) {
-      const laser = new Laser(this.player, this.tilemap, laserData)
-      this.lasers.push(laser);
-      this.cameraHandledContainer.addChild(laser.container);
-    }
     for (const ennemy of map.dynamicObjectsMap.ennemies) {
       const mob = new Mob(this.tilemap, ennemy.x, ennemy.y, ennemy.speed);
       this.mobs.push(mob);
       this.cameraHandledContainer.addChild(mob.container);
     }
     this.cameraHandledContainer.addChild(this.backTileMap.container);
+    for (const laserData of map.dynamicObjectsMap.laserHitReg) {
+      const laser = new Laser(this.player, this.tilemap, laserData)
+      this.lasers.push(laser);
+      this.cameraHandledContainer.addChild(laser.container);
+    }
     for (const collectableData of map.dynamicObjectsMap.collectables) {
       const collectable = new Collectable(
         this.player,
@@ -117,7 +141,6 @@ export default class GameScene extends Scene {
     this.updateLasers();
     this.updateMobs(delta);
     this.updateCollectable();
-    this.userInterface.update(delta);
     this.endTrigger.update();
   }
 
@@ -144,35 +167,50 @@ export default class GameScene extends Scene {
     super.onSceneStart();
     this.player.startKeyboardListening();
     this.keysHandlers.gravitySwitch = keyboard('e');
+    this.onPlayerDeath = this.onPlayerDeath.bind(this);
+    Game.events.addEventHandler('gameplay:death', this.onPlayerDeath);
     this.keysHandlers.gravitySwitch.press = this.switchGravity.bind(this);
     if (this.flagAnimation)
       this.flagAnimation.start();
   }
 
+  onPlayerDeath() {
+    this.keysHandlers.gravitySwitch.unsubscribe();
+    Game.events.removeEventHandler('gameplay:death', this.onPlayerDeath);
+  }
+
   onSceneEnd() {
     super.onSceneEnd();
+    audio.pause();
     this.player.stopKeyboardListening();
     this.keysHandlers.gravitySwitch.unsubscribe();
     this.lasers.forEach(item => item.onSceneEnd());
     this.mobs.forEach(item => item.unload());
     if (this.flagAnimation)
       this.flagAnimation.stop();
+    this.userInterface.unload();
   }
 
   switchGravity() {
-    console.log('Gravity switch');
     Game.gameplayState.isGravityEnabled = !Game.gameplayState.isGravityEnabled;
     Game.events.triggerEvent('gameplay:gravity-switch', Game.gameplayState.isGravityEnabled);
+    if (Game.gameplayState.isGravityEnabled) {
+      this.bgSprite.alpha = 1
+      this.bgSpaceSprite.alpha = 0;
+    } else {
+      this.bgSprite.alpha = 0;
+      this.bgSpaceSprite.alpha = 1;
+    }
   }
 
   onPlayerReachEnd() {
-    console.info('Player reached end');
     for (const collectable of this.collectables) {
-      if (!collectable.isPick())
+      if (!collectable.isPick()) {
+        Game.events.triggerEvent('gui:missing-coins');
         return;
+      }
     }
     this.flagAnimation.onAnimationFinished = (animName) => {
-      console.log('yayayay');
       if (animName === 'reached') {
         this.flagAnimation.stop();
         setTimeout(() => {

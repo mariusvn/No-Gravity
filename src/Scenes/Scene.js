@@ -1,4 +1,5 @@
-
+import sound from "root/sound";
+import music from "assets/audio/jam.mp3"
 export default class Scene {
 
   sceneContainer;
